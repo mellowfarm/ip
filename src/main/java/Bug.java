@@ -4,6 +4,8 @@ public class Bug {
     public static void main(String[] args) {
         String name = "Bug";
         Scanner sc = new Scanner(System.in);
+        String[] tasks = new String[100];
+        int size = 0;
 
         // greetings
         System.out.println("____________________________________________________________");
@@ -14,13 +16,22 @@ public class Bug {
         while (sc.hasNextLine()) {
             String input = sc.nextLine();
 
-            if("bye".equalsIgnoreCase(input)) {
+            if ("bye".equalsIgnoreCase(input)) {
                 break;
             }
 
-            System.out.println("____________________________________________________________");
-            System.out.println(input);
-            System.out.println("____________________________________________________________");
+            if ("list".equalsIgnoreCase(input)) {
+                for (int i = 1; i <= size; i++) {
+                    System.out.println(i + ". " + tasks[i - 1]);
+                }
+                System.out.println("____________________________________________________________");
+            } else {
+                tasks[size] = input;
+                size++;
+                System.out.println("____________________________________________________________");
+                System.out.println("added: " + input);
+                System.out.println("____________________________________________________________");
+            }
         }
 
         System.out.println("____________________________________________________________");
