@@ -4,8 +4,7 @@ public class Bug {
     public static void main(String[] args) {
         String name = "Bug";
         Scanner sc = new Scanner(System.in);
-        Task[] tasks = new Task[100];
-        int size = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         // greetings
         System.out.println("____________________________________________________________");
@@ -25,33 +24,43 @@ public class Bug {
                 }
 
                 if ("list".equals(instruction)) {
-                    for (int i = 1; i <= size; i++) {
-                        System.out.println(i + "." + tasks[i - 1].toString());
+                    System.out.println("____________________________________________________________");
+                    for (int i = 1; i <= tasks.size(); i++) {
+                        System.out.println(i + "." + tasks.get(i - 1).toString());
                     }
                     System.out.println("____________________________________________________________");
                 } else if ("mark".equals(instruction)) {
+                    System.out.println("____________________________________________________________");
                     int taskNum = Integer.parseInt(contents) - 1;
-                    tasks[taskNum].markAsDone();
-                    System.out.println("Nice! I've marked this task as done:\n[" + tasks[taskNum].getStatusIcon() + "] " +
-                            tasks[taskNum].getDescription());
+                    tasks.get(taskNum).markAsDone();
+                    System.out.println("Nice! I've marked this task as done:\n[" + tasks.get(taskNum).getStatusIcon() + "] " +
+                            tasks.get(taskNum).getDescription());
                     System.out.println("____________________________________________________________");
                 } else if ("unmark".equals(instruction)) {
+                    System.out.println("____________________________________________________________");
                     int taskNum = Integer.parseInt(contents) - 1;
-                    tasks[taskNum].markAsUndone();
-                    System.out.println("OK, I've marked this task as not done yet:\n[" + tasks[taskNum].getStatusIcon() + "] " +
-                            tasks[taskNum].getDescription());
+                    tasks.get(taskNum).markAsUndone();
+                    System.out.println("OK, I've marked this task as not done yet:\n[" + tasks.get(taskNum).getStatusIcon() + "] " +
+                            tasks.get(taskNum).getDescription());
+                    System.out.println("____________________________________________________________");
+                } else if ("delete".equals(instruction)) {
+                    System.out.println("____________________________________________________________");
+                    int taskNum = Integer.parseInt(contents) - 1;
+                    Task rem = tasks.get(taskNum);
+                    tasks.remove(rem);
+                    System.out.println("Ok! I've removed this task:\n" + rem.toString() + "\nNow you have " + tasks.size() +
+                            " tasks in the list.");
                     System.out.println("____________________________________________________________");
                 } else {
                     if ("todo".equals(instruction)) {
                         if ("".equals(contents)) {
                             throw new BugException(":(! a todo task must have a description!");
                         }
-                        tasks[size] = new ToDos(contents);
-                        size++;
-                        int num = size + 1;
+                        Task todo = new ToDos(contents);
+                        tasks.add(todo);
                         System.out.println("____________________________________________________________");
-                        System.out.println("Ok! I've added this task:\n" + tasks[size].toString() +
-                                "\nNow you have " + num + " tasks in the list.");
+                        System.out.println("Ok! I've added this task:\n" + todo.toString() +
+                                "\nNow you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                     } else if ("deadline".equals(instruction)) {
                         String[] parts = contents.split("/", 2);
@@ -63,12 +72,11 @@ public class Bug {
                         if ("".equals(by)) {
                             throw new BugException(":(! a deadline task must have a due date!");
                         }
-                        tasks[size] = new Deadlines(desc, by);
-                        size++;
-                        int num = size + 1;
+                        Task deadline = new Deadlines(desc, by);
+                        tasks.add(deadline);
                         System.out.println("____________________________________________________________");
-                        System.out.println("Ok! I've added this task:\n" + tasks[size].toString() +
-                                "\nNow you have " + num + " tasks in the list.");
+                        System.out.println("Ok! I've added this task:\n" + deadline.toString() +
+                                "\nNow you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                     } else if ("event".equals(instruction)) {
                         String[] parts = contents.split("/", 3);
@@ -84,12 +92,11 @@ public class Bug {
                         if ("".equals(end)) {
                             throw new BugException(":(! an event task must have an end date!");
                         }
-                        tasks[size] = new Events(desc, start, end);
-                        size++;
-                        int num = size + 1;
+                        Task event = new Events(desc, start, end);
+                        tasks.add(new Events(desc, start, end));
                         System.out.println("____________________________________________________________");
-                        System.out.println("Ok! I've added this task:\n" + tasks[size].toString() +
-                                "\nNow you have " + num + " tasks in the list.");
+                        System.out.println("Ok! I've added this task:\n" + event.toString() +
+                                "\nNow you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                     } else {
                         throw new BugException(":(! i don't know what you mean! please re-enter your task :)!");
