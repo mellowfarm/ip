@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Bug {
+
     public static void main(String[] args) {
         String name = "Bug";
         Scanner sc = new Scanner(System.in);
@@ -63,15 +64,16 @@ public class Bug {
                                 "\nNow you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                     } else if ("deadline".equals(instruction)) {
-                        String[] parts = contents.split("/", 2);
-                        String desc = parts[0];
+                        String[] parts = contents.split("/by", 2);
+                        String desc = parts[0].trim();
                         if ("".equals(desc)) {
                             throw new BugException(":(! a deadline task must have a description!");
                         }
-                        String by = parts[1].trim().split("\\s+", 2)[1];
+                        String by = (parts.length > 1) ? parts[1].trim() : "";
                         if ("".equals(by)) {
                             throw new BugException(":(! a deadline task must have a due date!");
                         }
+
                         Task deadline = new Deadlines(desc, by);
                         tasks.add(deadline);
                         System.out.println("____________________________________________________________");
@@ -92,6 +94,7 @@ public class Bug {
                         if ("".equals(end)) {
                             throw new BugException(":(! an event task must have an end date!");
                         }
+
                         Task event = new Events(desc, start, end);
                         tasks.add(new Events(desc, start, end));
                         System.out.println("____________________________________________________________");
