@@ -4,7 +4,8 @@ public class Bug {
     public static void main(String[] args) {
         String name = "Bug";
         Scanner sc = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        Save storage = new Save();
+        ArrayList<Task> tasks = new ArrayList<>(storage.load());
 
         // greetings
         System.out.println("____________________________________________________________");
@@ -36,6 +37,7 @@ public class Bug {
                     System.out.println("Nice! I've marked this task as done:\n[" + tasks.get(taskNum).getStatusIcon() + "] " +
                             tasks.get(taskNum).getDescription());
                     System.out.println("____________________________________________________________");
+                    storage.update(tasks);
                 } else if ("unmark".equals(instruction)) {
                     System.out.println("____________________________________________________________");
                     int taskNum = Integer.parseInt(contents) - 1;
@@ -43,6 +45,7 @@ public class Bug {
                     System.out.println("OK, I've marked this task as not done yet:\n[" + tasks.get(taskNum).getStatusIcon() + "] " +
                             tasks.get(taskNum).getDescription());
                     System.out.println("____________________________________________________________");
+                    storage.update(tasks);
                 } else if ("delete".equals(instruction)) {
                     System.out.println("____________________________________________________________");
                     int taskNum = Integer.parseInt(contents) - 1;
@@ -51,6 +54,7 @@ public class Bug {
                     System.out.println("Ok! I've removed this task:\n" + rem.toString() + "\nNow you have " + tasks.size() +
                             " tasks in the list.");
                     System.out.println("____________________________________________________________");
+                    storage.update(tasks);
                 } else {
                     if ("todo".equals(instruction)) {
                         if ("".equals(contents)) {
@@ -62,9 +66,10 @@ public class Bug {
                         System.out.println("Ok! I've added this task:\n" + todo.toString() +
                                 "\nNow you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
+                        storage.update(tasks);
                     } else if ("deadline".equals(instruction)) {
                         String[] parts = contents.split("/", 2);
-                        String desc = parts[0];
+                        String desc = parts[0].trim();
                         if ("".equals(desc)) {
                             throw new BugException(":(! a deadline task must have a description!");
                         }
@@ -78,9 +83,11 @@ public class Bug {
                         System.out.println("Ok! I've added this task:\n" + deadline.toString() +
                                 "\nNow you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
+                        storage.update(tasks);
+
                     } else if ("event".equals(instruction)) {
                         String[] parts = contents.split("/", 3);
-                        String desc = parts[0];
+                        String desc = parts[0].trim();
                         if ("".equals(desc)) {
                             throw new BugException(":(! an event task must have a description!");
                         }
@@ -98,6 +105,7 @@ public class Bug {
                         System.out.println("Ok! I've added this task:\n" + event.toString() +
                                 "\nNow you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
+                        storage.update(tasks);
                     } else {
                         throw new BugException(":(! i don't know what you mean! please re-enter your task :)!");
                     }
