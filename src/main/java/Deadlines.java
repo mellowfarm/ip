@@ -16,4 +16,10 @@ public class Deadlines extends Task{
     public String toString() {
         return "[D]" + super.toString() + "(by: " + by.format(PRETTY) + ")";
     }
+
+    @Override
+    public String toFileString() {
+        int status = isDone ? 1 : 0;
+        return "D | " + status + " | " + getDescription() + " | " + by;
+    }
 }

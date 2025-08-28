@@ -16,4 +16,10 @@ public class Events extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
     }
+
+    @Override
+    public String toFileString() {
+        int status = isDone ? 1 : 0;
+        return "D | " + status + " | " + getDescription() + " | " + start + "-" + end;
+    }
 }
