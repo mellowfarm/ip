@@ -2,6 +2,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,14 +36,17 @@ public class Save {
                         out.add(todo);
                         break;
                     case "D":
-                        Task deadline = new Deadlines(p[2], p[3]);
+                        LocalDate by = LocalDate.parse(p[3]);
+                        Task deadline = new Deadlines(p[2], by);
                         if (isDone) {
                             deadline.markAsDone();
                         }
                         out.add(deadline);
                         break;
                     case "E":
-                        Task event = new Events(p[2], p[3], p[4]);
+                        LocalDateTime start = LocalDateTime.parse(p[3]);
+                        LocalDateTime end = LocalDateTime.parse(p[4]);
+                        Task event = new Events(p[2], start, end);
                         if (isDone) {
                             event.markAsDone();
                         }

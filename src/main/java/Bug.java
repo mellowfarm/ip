@@ -1,6 +1,13 @@
 import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class Bug {
+
+    private static final DateTimeFormatter INPUT_DT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
     public static void main(String[] args) {
         String name = "Bug";
         Scanner sc = new Scanner(System.in);
@@ -73,9 +80,16 @@ public class Bug {
                         if ("".equals(desc)) {
                             throw new BugException(":(! a deadline task must have a description!");
                         }
-                        String by = parts[1].trim().split("\\s+", 2)[1];
-                        if ("".equals(by)) {
+                        String byStr = parts[1].trim().split("\\s+", 2)[1];
+                        if ("".equals(byStr)) {
                             throw new BugException(":(! a deadline task must have a due date!");
+                        }
+
+                        LocalDate by;
+                        try {
+                            by = LocalDate.parse(byStr);
+                        } catch (Exception e) {
+                            throw new BugException(":(! invalid date. use yyyy-MM-dd (eg 2005-11-27)!");
                         }
                         Task deadline = new Deadlines(desc, by);
                         tasks.add(deadline);
@@ -91,14 +105,23 @@ public class Bug {
                         if ("".equals(desc)) {
                             throw new BugException(":(! an event task must have a description!");
                         }
-                        String start = parts[1].trim().split("\\s+", 2)[1];
-                        if ("".equals(start)) {
+                        String startStr = parts[1].trim().split("\\s+", 2)[1];
+                        if ("".equals(startStr)) {
                             throw new BugException(":(! an event task must have a start date!");
                         }
-                        String end = parts[2].trim().split("\\s+", 2)[1];
-                        if ("".equals(end)) {
+                        String endStr = parts[2].trim().split("\\s+", 2)[1];
+                        if ("".equals(endStr)) {
                             throw new BugException(":(! an event task must have an end date!");
                         }
+
+                        LocalDateTime start, end;
+                        try {
+                            start = LocalDateTime.parse(startStr, INPUT_DT);
+                            end = LocalDateTime.parse(endStr, INPUT_DT);
+                        } catch (Exception e) {
+                            throw new BugException(":(! invalid datetime. use yyyy-MM-dd HHmm (eg 2005-11-27 1800)!");
+                        }
+
                         Task event = new Events(desc, start, end);
                         tasks.add(new Events(desc, start, end));
                         System.out.println("____________________________________________________________");
