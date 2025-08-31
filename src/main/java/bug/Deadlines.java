@@ -1,8 +1,9 @@
+package bug;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
-public class Deadlines extends Task{
+public class Deadlines extends Task {
 
     protected LocalDate by;
     private static final DateTimeFormatter PRETTY = DateTimeFormatter.ofPattern("dd MMM yyyy");

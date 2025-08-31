@@ -1,3 +1,5 @@
+package bug;
+
 import java.util.Scanner;
 
 public class Ui {
