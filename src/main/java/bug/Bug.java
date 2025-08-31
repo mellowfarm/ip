@@ -1,3 +1,5 @@
+package bug;
+
 public class Bug {
 
     private final Storage storage;
