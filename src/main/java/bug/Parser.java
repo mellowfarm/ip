@@ -4,6 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The Parser class processes user input and categorises it into different task types.
+ * It extracts relevant information from the input string and assigns it to the appropriate fields.
+ * The class is used to interpret the user's commands and convert them into task objects (ToDo, Deadline, Event).
+ */
+
 public class Parser {
     private static final DateTimeFormatter INPUT_DT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter INPUT_DT2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -16,6 +22,14 @@ public class Parser {
     public LocalDateTime start, end;
     public int index;
     public String error;
+
+    /**
+     * Constructs a Parser object and parses the given input string.
+     * It determines the task type (e.g. TODO, DEADLINE, EVENT)
+     * and extracts relevant details such as description, date and time
+     *
+     * @param input The user input string that represents a task command (e.g. "todo task", "deadline task /by 2025-08-31").
+     */
 
     public Parser(String input) {
         if (input == null || input.isBlank()) {
@@ -110,6 +124,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks if there was an error in the parsing process
+     *
+     * @return true if there is an error, false otherwise
+     */
     public boolean hasError() {
         return error != null;
     }

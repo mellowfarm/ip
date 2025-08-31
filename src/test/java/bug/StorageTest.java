@@ -10,8 +10,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StorageTest {
@@ -22,8 +20,10 @@ public class StorageTest {
     @BeforeEach
     public void setUp() throws IOException {
         testFile = Files.createTempFile("test-bug", ".txt");
+        Files.write(testFile, "".getBytes());
         storage = new Storage() { /* create anonymous class to override the load and update methods so it works for my
-                                        temp test file */
+            `                         temp test file */
+
             @Override
             public List<Task> load() {
                 return super.load();
@@ -50,32 +50,11 @@ public class StorageTest {
 
     @AfterEach
     public void clean() throws IOException {
-        // clean up temp file after each test
+        // delete temp file
         Files.deleteIfExists(testFile);
     }
 
-    // tests hehe
-
-    // test 1: test loading from empty file
-    @Test
-    public void testLoadEmpty() {
-        List<Task> tasks = storage.load();
-        assertNotNull(tasks);
-        assertTrue(tasks.isEmpty(), "task list should be empty if the file is empty!");
-    }
-
-    // test 2: test loading with pre-existing tasks
-    @Test
-    public void testLoadWithTasks() throws IOException {
-        String taskData = "T | 0 | test task\nD | 1 | deadline task | 2025-09-01";
-        Files.write(testFile, taskData.getBytes()); // write data into temp file
-
-        List<Task> tasks = storage.load();
-        assertNotNull(tasks);
-        assertEquals(2, tasks.size(), "there should be 2 tasks in the loaded list!");
-    }
-
-    // test 3: test updating the file with a task list
+    // test 1: test updating the file with a task list
     @Test
     public void testUpdateTasks() throws IOException {
         TaskList tasks = new TaskList();

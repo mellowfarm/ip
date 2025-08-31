@@ -31,8 +31,17 @@ application {
     mainClass.set("bug.Bug")
 }
 
+jar {
+    archiveBaseName = 'bug'
+    manifest {
+        attributes (
+            'Main-Class': 'bug.Bug'
+        )
+    }
+}
+
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "bug"
     archiveClassifier = null
 }
 

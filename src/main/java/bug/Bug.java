@@ -1,5 +1,9 @@
 package bug;
 
+/**
+ * The Bug class is the entry point of the task management application.
+ * It interacts with the user, manages tasks, and stores them in a file.
+ */
 public class Bug {
 
     private final Storage storage;

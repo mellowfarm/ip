@@ -31,12 +31,14 @@ public class ParserTest {
     // test 3: test parsing event
     @Test
     public void testParseEvent() {
-        String input = "event test event /from 2025-09-01 0800 /to 2025/09/01 1200";
+        String input = "event test event /from 2025-09-01 0800 /to 2025-09-01 1200";
         Parser parser = new Parser(input);
 
         assertEquals(Parser.Type.EVENT, parser.type);
         assertEquals("test event", parser.desc);
+        assertNotNull(parser.start);
         assertEquals("2025-09-01T08:00", parser.start.toString());
+        assertNotNull(parser.end);
         assertEquals("2025-09-01T12:00", parser.end.toString());
     }
 
