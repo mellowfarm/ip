@@ -3,7 +3,9 @@ package bug;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,7 +25,8 @@ import java.util.List;
  * This class also handles file creation if the file doesn't exist.
  */
 public class Storage {
-    private final Path path = Paths.get("data", "bug.txt");
+    private static final String FILE_NAME = "bug.txt";
+    private final Path path = Paths.get("data", FILE_NAME);
 
     /**
      * Loads tasks from the storage file and returns them as a list of Task objects.
@@ -75,6 +78,7 @@ public class Storage {
                         out.add(event);
                         break;
                     default:
+                        break;
                 }
             }
         } catch (IOException e) {
