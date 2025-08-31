@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Save {
+public class Storage {
     private final Path path = Paths.get("data", "bug.txt");
 
     public List<Task> load() {
@@ -61,7 +61,7 @@ public class Save {
         return out;
     }
 
-    public void update(List<Task> tasks) {
+    public void update(TaskList tasks) {
         try {
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
