@@ -8,7 +8,7 @@ public class Parser {
     private static final DateTimeFormatter INPUT_DT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter INPUT_DT2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public enum Type { LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, BYE, UNKNOWN };
+    public enum Type { LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, BYE, UNKNOWN, FIND };
 
     public Type type;
     public String desc;
@@ -33,6 +33,13 @@ public class Parser {
             String contents = (split.length > 1) ? split[1] : "";
 
             switch(instruction) {
+                case "find":
+                    type = Type.FIND;
+                    desc = contents.trim();
+                    if (desc.isEmpty()) {
+                        error = ":(! please provide a keyword for searching!";
+                    }
+                    break;
                 case "bye": this.type = Type.BYE; break;
                 case "list": this.type = Type.LIST; break;
                 case "todo": {
