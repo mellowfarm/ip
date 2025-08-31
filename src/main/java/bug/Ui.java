@@ -3,8 +3,12 @@ package bug;
 import java.util.Scanner;
 
 public class Ui {
-    private Scanner sc = new Scanner(System.in);
-    private String name = "Bug";
+    private final Scanner sc = new Scanner(System.in);
+    private final String name;
+
+    public Ui() {
+        name = "Bug";
+    }
 
     public void showLine() {
         System.out.println("____________________________________________________________");

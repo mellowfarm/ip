@@ -31,4 +31,8 @@ public class TaskList {
         return tasks.get(index);
     }
 
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
+
 }
