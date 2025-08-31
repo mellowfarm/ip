@@ -151,4 +151,8 @@ public class Ui {
         showLine();
     }
 
+    public void showTasks(int index, Task task) {
+        System.out.println("Here are the matching tasks in your list:\n" + index + "." + task.toString());
+    }
+
 }

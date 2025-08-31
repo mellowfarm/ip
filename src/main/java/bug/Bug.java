@@ -32,6 +32,9 @@ public class Bug {
             }
 
             switch (parser.type) {
+                case FIND:
+                    handleFind(parser.desc);
+                    break;
                 case LIST:
                     ui.showList(tasks);
                     break;
@@ -107,6 +110,27 @@ public class Bug {
             }
         }
 
+    }
+
+    /**
+     * Handles the 'find' command. Searches for tasks that contain the provided keyword.
+     *
+     * @param keyword the keyword to search for in the task descriptions.
+     */
+    private void handleFind(String keyword) {
+        ui.showLine();
+        boolean found = false;
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                ui.showTasks(i + 1, task);
+                found = true;
+            }
+        }
+        if (!found) {
+            ui.showError(":(! no tasks match the keyword: " + keyword + "!");
+        }
+        ui.showLine();
     }
 
     public static void main(String[] args) {
