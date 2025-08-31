@@ -3,14 +3,17 @@ package bug;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    private final Path path = Paths.get("data", "bug.txt");
+    private static final String FILE_NAME = "bug.txt";
+    private final Path path = Paths.get("data", FILE_NAME);
 
     public List<Task> load() {
         List<Task> out = new ArrayList<>(); // accumulate loaded tasks in the format we want into .txt file
@@ -55,6 +58,7 @@ public class Storage {
                         out.add(event);
                         break;
                     default:
+                        break;
                 }
             }
         } catch (IOException e) {

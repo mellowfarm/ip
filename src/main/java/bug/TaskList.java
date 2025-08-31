@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class TaskList {
 
-    private List<Task> tasks;
+    private final List<Task> tasks;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -30,9 +30,4 @@ public class TaskList {
     public Task get(int index) {
         return tasks.get(index);
     }
-
-    public boolean isEmpty() {
-        return tasks.isEmpty();
-    }
-
 }
