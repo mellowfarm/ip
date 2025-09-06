@@ -1,4 +1,3 @@
 T | 1 | make bread
-T | 0 | make bread
 T | 0 | eat
-T | 0 | eat
+T | 0 | dont cry

@@ -29,14 +29,14 @@ public class Ui {
      * Displays a greeting message to the user.
      */
     public String showGreeting() {
-        return showLine() + "\nHello! I'm " + name + "\nWhat can I do for you?\n" + showLine();
+        return "Hello! I'm " + name + "\nWhat can I do for you?\n";
     }
 
     /**
      * Displays a goodbye message to the user.
      */
     public String showBye() {
-        return showLine() + "\nBye. Hope to see you again soon!\n" + showLine();
+        return "Bye. Hope to see you again soon!\n";
     }
 
     /**
@@ -55,12 +55,10 @@ public class Ui {
      */
     public String showList(TaskList tasks) {
         StringBuilder list = new StringBuilder();
-        list.append(showLine());
-        list.append("\nyour tasks are here: \n");
+        list.append("your tasks are here: \n");
         for (int i = 1; i <= tasks.size(); i++) {
             list.append(i).append(".").append(tasks.get(i - 1).toString()).append("\n");
         }
-        list.append(showLine());
         return list.toString();
     }
 
@@ -70,8 +68,8 @@ public class Ui {
      * @param task the task that was marked as done
      */
     public String showDone(Task task) {
-        return showLine() + "\nNice! I've marked this task as done:\n[" + task.getStatusIcon() + "] " +
-                task.getDescription() + "\n" + showLine();
+        return "Nice! I've marked this task as done:\n[" + task.getStatusIcon() + "] " +
+                task.getDescription();
     }
 
     /**
@@ -80,8 +78,8 @@ public class Ui {
      * @param task the task that was marked as not done
      */
     public String showUndone(Task task) {
-        return showLine() + "\nOK, I've marked this task as not done yet:\n[" + task.getStatusIcon() + "] " +
-                task.getDescription() + "\n" + showLine();
+        return "OK, I've marked this task as not done yet:\n[" + task.getStatusIcon() + "] " +
+                task.getDescription();
     }
 
     /**
@@ -91,8 +89,8 @@ public class Ui {
      * @param tasks the updated TaskList
      */
     public String showDeleted(Task task, TaskList tasks) {
-        return showLine() + "\nOk! I've removed this task:\n" + task.toString() + "\nNow you have " + tasks.size() +
-                " tasks in the list.\n" + showLine();
+        return "Ok! I've removed this task:\n" + task.toString() + "\nNow you have " + tasks.size() +
+                " tasks in the list.";
     }
 
     /**
@@ -102,8 +100,8 @@ public class Ui {
      * @param tasks the updated TaskList
      */
     public String showToDo(Task todo, TaskList tasks) {
-        return showLine() + "\nOk! I've added this task:\n" + todo.toString() + "\nNow you have " +
-                tasks.size() + " tasks in the list.\n" + showLine();
+        return "Ok! I've added this task:\n" + todo.toString() + "\nNow you have " +
+                tasks.size() + " tasks in the list.";
     }
 
     /**
@@ -113,8 +111,8 @@ public class Ui {
      * @param tasks the updated TaskList
      */
     public String showDeadline(Task deadline, TaskList tasks) {
-        return showLine() + "\nOk! I've added this task:\n" + deadline.toString() +
-                "\nNow you have " + tasks.size() + " tasks in the list.\n" + showLine();
+        return "Ok! I've added this task:\n" + deadline.toString() +
+                "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**
@@ -124,8 +122,8 @@ public class Ui {
      * @param tasks the updated TaskList
      */
     public String showEvent(Task event, TaskList tasks) {
-        return showLine() + "\nOk! I've added this task:\n" + event.toString() +
-                "\nNow you have " + tasks.size() + " tasks in the list.\n" + showLine();
+        return "Ok! I've added this task:\n" + event.toString() +
+                "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**
@@ -134,21 +132,15 @@ public class Ui {
      * @param error the error message to display
      */
     public String showError(String error) {
-        return showLine() + error + showLine();
-    }
-
-    public String showTasks(int index, Task task) {
-        return showLine() + "\nHere are the matching tasks in your list:\n" + index + "." + task.toString();
+        return error;
     }
 
     public String showFoundTasks(ArrayList<Task> matches) {
         StringBuilder list = new StringBuilder();
-        list.append(showLine()).append("\n");
-        list.append("\nyour matching tasks are here: \n");
+        list.append("your matching tasks are here: \n");
         for (int i = 1; i <= matches.size(); i++) {
             list.append(i).append(".").append(matches.get(i - 1).toString()).append("\n");
         }
-        list.append(showLine());
         return list.toString();
     }
 

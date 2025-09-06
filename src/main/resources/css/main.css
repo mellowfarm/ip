@@ -6,22 +6,22 @@
 }
 
 .text-field {
-    -fx-background-color: #d9ffe2;
-    -fx-font: 20px "Arial";
+    -fx-background-color: #fcfceb;
+    -fx-font: 15px "Arial";
 }
 
 .button {
-    -fx-background-color: mediumspringgreen;
+    -fx-background-color: #dffaca;
     -fx-font: italic bold 16px "Arial";
 }
 
 .button:hover {
-    -fx-background-color:cyan;
+    -fx-background-color: #f5f5b8;
     -fx-font-size: 18px;
 }
 
 .button:pressed {
-    -fx-background-color:orange;
+    -fx-background-color: #ffe1ad;
     -fx-font-size: 20px;
 }
 

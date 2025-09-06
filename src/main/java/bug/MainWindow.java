@@ -40,5 +40,6 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getBugDialog(response, bugImage)
         );
         userInput.clear();
+        scrollPane.setVvalue(1.0);
     }
 }
