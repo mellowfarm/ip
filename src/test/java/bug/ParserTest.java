@@ -13,6 +13,7 @@ public class ParserTest {
         String input = "todo test task";
         Parser parser = new Parser(input);
 
+
         assertEquals(Parser.Type.TODO, parser.type);
         assertEquals("test task", parser.desc);
     }
