@@ -16,6 +16,7 @@ public class TaskList {
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
+        assert tasks != null : "task list should never be null after initialisation!";
     }
 
     /**
@@ -24,7 +25,9 @@ public class TaskList {
      * @param init the initial list of tasks
      */
     public TaskList(List<Task> init) {
+        assert init != null : "initial task list cannot be null!";
         this.tasks = new ArrayList<>(init);
+        assert tasks != null : "task list should never be null after initialisation!";
     }
 
     /**
@@ -33,6 +36,7 @@ public class TaskList {
      * @return the size of the task list
      */
     public int size() {
+        assert tasks != null : "task list should never be null!";
         return tasks.size();
     }
 
@@ -42,6 +46,8 @@ public class TaskList {
      * @param task the task to be added
      */
     public void add(Task task) {
+        assert task != null : "cannot add null task to tak list!";
+        assert tasks != null : "task list should never be null!";
         tasks.add(task);
     }
 
@@ -52,6 +58,9 @@ public class TaskList {
      * @return the task that was removed
      */
     public Task delete(int index) {
+        assert tasks != null : "task list should never be null!";
+        assert index >= 0 : "index cannot be negative!";
+        assert index < tasks.size() : "index must be within task lost bounds!";
         return tasks.remove(index);
     }
 
@@ -62,6 +71,9 @@ public class TaskList {
      * @return the task at the specified index
      */
     public Task get(int index) {
+        assert tasks != null : "task list should never be null!";
+        assert index >= 0 : "index cannot be negative!";
+        assert index < tasks.size() : "index must be within task list bounds!";
         return tasks.get(index);
     }
 
@@ -72,8 +84,11 @@ public class TaskList {
      * @return a list of tasks that contain the keyword in their description
      */
     public ArrayList<Task> findTasks(String keyword) {
+        assert keyword != null : "search keyword cannot be null!";
+        assert tasks != null : "task list should never be null!";
         ArrayList<Task> matches = new ArrayList<>();
         for (Task t : tasks) {
+            assert t != null : "task in list should never be null!";
             if (t.getDescription().contains(keyword)) {
                 matches.add(t);
             }
