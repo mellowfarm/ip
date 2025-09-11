@@ -135,6 +135,12 @@ public class Ui {
         return error;
     }
 
+    /**
+     * Displays a list of tasks that match a search query.
+     *
+     * @param matches the list of matching tasks
+     * @return a formatted string of the matching tasks
+     */
     public String showFoundTasks(ArrayList<Task> matches) {
         StringBuilder list = new StringBuilder();
         list.append("your matching tasks are here: \n");
