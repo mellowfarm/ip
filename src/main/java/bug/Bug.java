@@ -15,6 +15,10 @@ public class Bug {
     private final TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Constructor initializes the application by setting up the user interface (UI),
+     * loading tasks from storage, and preparing the task list.
+     */
     public Bug() {
         ui = new Ui();
         storage = new Storage();
@@ -28,6 +32,9 @@ public class Bug {
         tasks = loadedTasks;
     }
 
+    /**
+     * Runs the application, accepting user input and executing commands in a loop.
+     */
     public void run() {
         Scanner sc = new Scanner(System.in);
         System.out.println(ui.showGreeting());
@@ -36,38 +43,53 @@ public class Bug {
             String input = sc.nextLine();
 
             if (input == null) {
-                break;
+                break; // Exit the loop if input is null
             }
 
             try {
-                Command command = Parser.parse(input);
-                String response = command.execute(tasks, ui, storage);
+                Command command = Parser.parse(input); // Parse the user input into a command
+                String response = command.execute(tasks, ui, storage); // Execute the command
                 System.out.println(response);
-                if (command.isExit()) break;
+
+                if (command.isExit()) break; // Exit if the command signals to quit
+
             } catch (BugException e) {
-                System.out.println(ui.showError(e.getMessage()));
+                System.out.println(ui.showError(e.getMessage())); // Show error message if command fails
             }
         }
 
     }
 
+    /**
+     * Returns the response to a given user input.
+     * This is used for testing purposes or when the application needs to respond programmatically.
+     *
+     * @param input the user input to process
+     * @return the response based on the input
+     */
     public String getResponse(String input) {
         try {
-            Command cmd = Parser.parse(input);
-            String response = cmd.execute(tasks, ui, storage);
+            Command cmd = Parser.parse(input); // Parse the input into a command
+            String response = cmd.execute(tasks, ui, storage); // Execute the command
+
             if (cmd.isExit()) {
-                Platform.exit();
+                Platform.exit(); // Exit the JavaFX application if the exit command is issued
             }
+
             return response;
         } catch (BugException e) {
-            return ui.showError(e.getMessage());
+            return ui.showError(e.getMessage()); // Return error message if command fails
         }
     }
 
-
+    /**
+     * The main method is the entry point for the application. It starts the task management system.
+     *
+     * @param args the command-line arguments (not used)
+     */
     public static void main(String[] args) {
-        Bug bug = new Bug();
-        bug.run();
+        Bug bug = new Bug(); // Create an instance of the Bug class
+        bug.run(); // Start the application
     }
 }
 

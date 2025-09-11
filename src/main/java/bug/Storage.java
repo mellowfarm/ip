@@ -36,22 +36,32 @@ public class Storage {
      * @return a list of tasks loaded from the storage file, or an empty list if the file is empty or not found
      */
     public List<Task> load() {
-        List<Task> out = new ArrayList<>(); // accumulate loaded tasks in the format we want into .txt file
-        try { // for first run when there's nothing in the file -> create the file!
+        List<Task> out = new ArrayList<>(); // Accumulate loaded tasks in the desired format
+
+        try {
+            // Ensure the parent directory exists, create it if necessary
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent()); // gets the folder that should contain the data & create the folder
             }
+
+            // If the file doesn't exist or is empty, return an empty list
             if (Files.notExists(path) || Files.size(path) == 0) {
                 return out;
             }
+
+            // Read all lines from the file
             for (String line : Files.readAllLines(path, StandardCharsets.UTF_8)) {
                 String s = line.trim();
-                if (s.isEmpty()) { // skip blank lines
+                if (s.isEmpty()) { // Skip blank lines
                     continue;
                 }
+
+                // Split the line into its components
                 String[] p = s.split("\\s*\\|\\s*");
                 String type = p[0];
                 boolean isDone = "1".equals(p[1]);
+
+                // Create the appropriate task object based on the type
                 switch (type) {
                     case "T":
                         Task todo = new ToDos(p[2]);
@@ -78,12 +88,14 @@ public class Storage {
                         out.add(event);
                         break;
                     default:
+                        // Unknown task type, do nothing
                         break;
                 }
             }
         } catch (IOException e) {
             System.err.println("Warning: failed to load tasks: " + e.getMessage());
         }
+
         return out;
     }
 
@@ -95,9 +107,12 @@ public class Storage {
      */
     public void update(TaskList tasks) {
         try {
+            // Ensure the parent directory exists, create it if necessary
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
+
+            // Write each task to the file
             FileWriter fw = new FileWriter(path.toFile());
             for (int i = 0; i < tasks.size(); i++) {
                 fw.write(tasks.get(i).toFileString());
