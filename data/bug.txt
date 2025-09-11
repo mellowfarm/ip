@@ -1,3 +1,4 @@
-T | 1 | make bread
 T | 0 | eat
 T | 0 | dont cry
+T | 0 | meow
+T | 0 | meow
