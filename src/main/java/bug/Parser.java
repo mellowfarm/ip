@@ -20,7 +20,7 @@ public class Parser {
         String[] split = input.split("\\s+", 2);
         assert split.length >= 1 : "split should always have at least one element!";
 
-        String instruction = split[0];
+        String instruction = split[0].toLowerCase();
         assert instruction != null : "instruction should not be null!";
 
         String contents = ((split.length > 1) ? split[1] : "").trim();
