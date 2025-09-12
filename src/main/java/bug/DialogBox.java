@@ -40,7 +40,9 @@ public class DialogBox extends HBox {
             e.printStackTrace(); // Print the stack trace if loading fails
         }
 
-        dialog.setText(text); // Set the message text in the dialog
+        dialog.setText(text);
+        dialog.setWrapText(true);
+        dialog.setMaxWidth(250); // Set the message text in the dialog
         displayPicture.setImage(img); // Set the display picture image
     }
 
