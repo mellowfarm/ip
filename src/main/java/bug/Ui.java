@@ -150,4 +150,15 @@ public class Ui {
         return list.toString();
     }
 
+    /**
+     * Displays a message confirming that a task has been snoozed.
+     * Shows the task with its updated date/time information after snoozing.
+     *
+     * @param task the task that was snoozed with updated deadline or event times
+     * @return a formatted string showing the confirmation message and the snoozed task details
+     */
+    public String showSnooze(Task task) {
+        return "OK, I've snoozed this task:\n" + task.toString();
+    }
+
 }

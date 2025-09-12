@@ -30,12 +30,10 @@ public class DeleteCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
         try {
-            // Attempt to delete the task at the given index
-            Task task = tasks.delete(taskIndex); // Assuming delete() method handles invalid index internally
-            storage.update(tasks); // Update storage after deletion
-            return ui.showDeleted(task, tasks); // Show the deleted task in the UI
+            Task task = tasks.delete(taskIndex);
+            storage.update(tasks);
+            return ui.showDeleted(task, tasks);
         } catch (Exception e) {
-            // If the index is invalid, throw a custom BugException
             throw new BugException(":(! no tasks at this index!");
         }
     }

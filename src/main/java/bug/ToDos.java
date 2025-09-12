@@ -1,5 +1,7 @@
 package bug;
 
+import java.time.Duration;
+
 /**
  * Represents a Todo task in the task management application.
  * This class extends the Task class and includes the description of the task.

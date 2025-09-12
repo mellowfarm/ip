@@ -2,6 +2,7 @@ package bug;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.Duration;
 
 /**
  * Represents an event task in the task management application.
@@ -47,5 +48,16 @@ public class Events extends Task {
     public String toFileString() {
         int status = isDone ? 1 : 0;
         return String.format("E | %d | %s | %s | %s", status, description, start, end);
+    }
+
+    /**
+     * Snoozes the event task by adding the given duration to both start and end times.
+     * This preserves the event duration while moving it to a later time.
+     * @param duration the duration to snooze the task by
+     */
+    @Override
+    public void snooze(Duration duration) {
+        this.start = this.start.plus(duration);
+        this.end = this.end.plus(duration);
     }
 }

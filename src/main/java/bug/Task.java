@@ -1,5 +1,7 @@
 package bug;
 
+import java.time.Duration;
+
 /**
  * Represents a task in the task management application.
  * A task has a description and a status indicating whether it's completed or not.
@@ -70,4 +72,8 @@ public abstract class Task {
      * @return a string that represents the task in a file-friendly format
      */
     public abstract String toFileString();
+
+    public void snooze(Duration duration) throws BugException {
+        throw new BugException(":(! cannot snooze todos, they have no dates!");
+    }
 }

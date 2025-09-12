@@ -1,4 +1,5 @@
 package bug;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -61,6 +62,8 @@ public class MainWindow extends AnchorPane {
         );
 
         userInput.clear();
-        scrollPane.setVvalue(1.0); // Scroll to the bottom of the dialog container
+        Platform.runLater(() -> {
+            scrollPane.setVvalue(1.0);
+        });
     }
 }
