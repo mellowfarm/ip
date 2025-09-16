@@ -12,7 +12,7 @@ Bug is a friendly task management chatbot that helps you keep track of your todo
 ### Adding Tasks
 #### Add a Todo Task
 Add a simple task without a specific date.
-</br>format: todo <description>
+</br>Format: todo <description>
 </br>Example:
 * todo buy groceries
 * todo do laundry
