@@ -13,21 +13,23 @@ Bug is a friendly task management chatbot that helps you keep track of your todo
 #### Add a Todo Task
 Add a simple task without a specific date.
 </br>format: todo <description>
-Example:
+</br>Example:
 * todo buy groceries
 * todo do laundry
 #### Add a Deadline Task
 Add a task with a due date.
 </br>Format: deadline <description> /by <date>
 * Date format: yyyy-MM-dd
-  Example:
+
+Example:
 * deadline submit assignment /by 2025-10-15
 * deadline pay bills /by 2025-12-01
 #### Add an Event Task
 Add a task with start and end times.
 </br>Format: event <description> /from <start> /to <end>
 * DateTime format: yyyy-MM-dd HHmm
-  Example:
+
+Example:
 * event project meeting /from 2024-10-15 1400 /to 2024-10-15 1600
 * event birthday party /from 2024-12-25 1800 /to 2024-12-25 2200
 ### Managing Tasks
