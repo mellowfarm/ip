@@ -6,6 +6,24 @@ package bug;
  */
 public class UnknownCommand extends Command {
 
+    private final String errorMessage;
+
+    /**
+     * Default constructor for unknown commands with generic error message.
+     */
+    public UnknownCommand() {
+        this.errorMessage = ":(! i don't know what you mean! please re-enter your task :)!";
+    }
+
+    /**
+     * Constructor with custom error message for specific format errors.
+     *
+     * @param errorMessage the specific error message to display
+     */
+    public UnknownCommand(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
     /**
      * Executes the UnknownCommand, displaying an error message to the user when the input is unrecognized.
      *
@@ -16,6 +34,6 @@ public class UnknownCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        return ui.showError(":(! i don't know what you mean! please re-enter your task :)!");
+        return ui.showError(errorMessage);
     }
 }

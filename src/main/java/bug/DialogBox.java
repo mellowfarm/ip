@@ -45,7 +45,6 @@ public class DialogBox extends HBox {
         Text textNode = new Text(text);
         textNode.getStyleClass().add("dialog-text");
         dialog.getChildren().add(textNode);
-        dialog.autosize();
         setFillHeight(false);
         displayPicture.setImage(img); // Set the display picture image
     }
@@ -59,7 +58,7 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp); // Reverse the order of the children nodes
         getChildren().setAll(tmp); // Update the children of this HBox with the reversed nodes
         setAlignment(Pos.TOP_LEFT); // Align the content to the top-left
-        dialog.getStyleClass().add("reply-label"); // Add a style class for the reply
+        dialog.getStyleClass().add("reply-text-flow"); // Add a style class for the reply
     }
 
     /**

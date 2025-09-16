@@ -14,7 +14,7 @@ public class Parser {
      */
     public static Command parse(String input) {
         if (input == null || input.isBlank()) {
-            return new UnknownCommand();
+            return new UnknownCommand(":(! input cannot be empty!");
         }
 
         String[] split = input.split("\\s+", 2);
@@ -26,21 +26,26 @@ public class Parser {
         String contents = ((split.length > 1) ? split[1] : "").trim();
         assert contents != null : "contents should not be null (can be empty)";
 
+        // Handle special characters in instruction
+        if (!instruction.matches("[a-zA-Z]+")) {
+            return new UnknownCommand(":(! commands can only contain letters!");
+        }
+
         switch (instruction) {
             case "find": {
-                return new FindCommand(contents);
+                return parseFind(contents);
             }
             case "bye": {
-                return new ByeCommand();
+                return parseBye(contents);
             }
             case "list": {
-                return new ListCommand();
+                return parseList(contents);
             }
             case "snooze": {
                 return parseSnoozeCommand(contents);
             }
             case "todo": {
-                return new TodoCommand(contents);
+                return parseTodo(contents);
             }
             case "deadline": {
                 return parseDeadlineCommand(contents);
@@ -54,8 +59,39 @@ public class Parser {
                 return parseIndexCommand(instruction, contents);
             }
             default:
-                return new UnknownCommand();
+                return new UnknownCommand(":(! unknown command '" + instruction + "'!");
         }
+    }
+
+    /**
+     * Parses find command.
+     */
+    private static Command parseFind(String contents) {
+        if (contents.isEmpty()) {
+            return new UnknownCommand(":(! find command requires a search keyword!");
+        }
+
+        return new FindCommand(contents);
+    }
+
+    /**
+     * Parses bye command, it should have no additional parameters.
+     */
+    private static Command parseBye(String contents) {
+        if (!contents.isEmpty()) {
+            return new UnknownCommand(":(! bye command should not have any parameters!");
+        }
+        return new ByeCommand();
+    }
+
+    /**
+     * Parses list command, it should have no additional parameters.
+     */
+    private static Command parseList(String contents) {
+        if (!contents.isEmpty()) {
+            return new UnknownCommand(":(! list command should not have any parameters!");
+        }
+        return new ListCommand();
     }
 
     /**
@@ -80,6 +116,17 @@ public class Parser {
         } catch (Exception e) {
             return new UnknownCommand();
         }
+    }
+
+    /**
+     * Parses todo command.
+     */
+    private static Command parseTodo(String contents) {
+        if (contents.isEmpty()) {
+            return new UnknownCommand(":(! todo command requires a description!");
+        }
+
+        return new TodoCommand(contents);
     }
 
     /**
@@ -140,14 +187,21 @@ public class Parser {
         return new EventCommand(description, startStr, endStr);
     }
 
+    /**
+     * Parses index-based commands (mark, unmark, delete).
+     */
     private static Command parseIndexCommand(String instruction, String contents) {
         if (contents.isEmpty()) {
             return new UnknownCommand();
         }
 
+        if (contents.contains(" ")) {
+            return new UnknownCommand(":(! " + instruction + " command should only have one parameter (task index)!");
+        }
+
         try {
             int index = Integer.parseInt(contents) - 1;
-            assert index >= -1 : "parsed index should be valid (note: -1 will be caught by commands)";
+            assert index >= -1 : "parsed index should be valid";
 
             switch (instruction) {
                 case "mark":
@@ -159,8 +213,8 @@ public class Parser {
                 default:
                     return new UnknownCommand();
             }
-        } catch (Exception e) {
-            return new UnknownCommand();
+        } catch (NumberFormatException e) {
+            return new UnknownCommand(":(! task index must be a valid number, not '" + contents + "'!");
         }
     }
 }
