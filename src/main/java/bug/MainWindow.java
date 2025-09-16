@@ -44,6 +44,8 @@ public class MainWindow extends AnchorPane {
      */
     public void setBug(Bug b) {
         bug = b;
+        String greeting = bug.greeting();
+        dialogContainer.getChildren().add(DialogBox.getBugDialog(greeting, bugImage));
     }
 
     /**

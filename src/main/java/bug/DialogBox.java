@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  * A custom dialog box for displaying messages in the task management application.
@@ -19,7 +21,7 @@ import javafx.scene.layout.HBox;
  */
 public class DialogBox extends HBox {
     @FXML
-    private Label dialog; // The label that holds the text of the message
+    private TextFlow dialog; // The label that holds the text of the message
     @FXML
     private ImageView displayPicture; // The image view for the display picture
 
@@ -40,9 +42,11 @@ public class DialogBox extends HBox {
             e.printStackTrace(); // Print the stack trace if loading fails
         }
 
-        dialog.setText(text);
-        dialog.setWrapText(true);
-        dialog.setMaxWidth(250); // Set the message text in the dialog
+        Text textNode = new Text(text);
+        textNode.getStyleClass().add("dialog-text");
+        dialog.getChildren().add(textNode);
+        dialog.autosize();
+        setFillHeight(false);
         displayPicture.setImage(img); // Set the display picture image
     }
 

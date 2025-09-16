@@ -82,6 +82,10 @@ public class Bug {
         }
     }
 
+    public String greeting() {
+        return ui.showGreeting();
+    }
+
     /**
      * The main method is the entry point for the application. It starts the task management system.
      *

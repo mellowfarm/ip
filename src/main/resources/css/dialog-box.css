@@ -1,4 +1,4 @@
-.label {
+.text-flow {
      -fx-background-color: #faf7dc;
      -fx-border-color: #faf7dc;
      -fx-border-width: 2px;
@@ -7,10 +7,17 @@
      -fx-padding: 6px;
      -fx-border-insets: 0px 7px 0px 7px;
      -fx-background-insets: 0px 7px 0px 7px;
-     -fx-text-fill: ladder(background, white 49%, black 50%);
- }
+     -fx-max-width: 300px;
+     -fx-pref-width: -1;
+     -fx-min-width: -1;
+}
 
-.reply-label {
+.dialog-text {
+    -fx-fill: ladder(background, white 49%, black 50%);
+    -fx-font-size: 14px;
+}
+
+.reply-text-flow {
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;
 }
