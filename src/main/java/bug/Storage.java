@@ -56,46 +56,70 @@ public class Storage {
                     continue;
                 }
 
-                // Split the line into its components
-                String[] p = s.split("\\s*\\|\\s*");
-                String type = p[0];
-                boolean isDone = "1".equals(p[1]);
+                try {
+                    // Split the line into its components
+                    String[] p = s.split("\\s*\\|\\s*");
 
-                // Create the appropriate task object based on the type
-                switch (type) {
-                    case "T":
-                        Task todo = new ToDos(p[2]);
+                    if (p.length < 3) {
+                        System.err.println("Warning: Skipping invalid line (not enough data): " + s);
+                        continue;
+                    }
+
+                    String type = p[0];
+                    boolean isDone = "1".equals(p[1]);
+                    String description = p[2];
+
+                    // Create the appropriate task object based on the type
+                    Task task = null;
+                    switch (type) {
+                        case "T":
+                            if (p.length == 3) {
+                                task = new ToDos(description);
+                            }
+                            break;
+                        case "D":
+                            if (p.length == 4) {
+                                try {
+                                    LocalDate by = LocalDate.parse(p[3]);
+                                    task = new Deadlines(description, by);
+                                } catch (Exception e) {
+                                    System.err.println("Warning: Invalid date in line: " + s);
+                                }
+                            }
+                            break;
+                        case "E":
+                            if (p.length == 5) {
+                                try {
+                                    LocalDateTime start = LocalDateTime.parse(p[3]);
+                                    LocalDateTime end = LocalDateTime.parse(p[4]);
+                                    task = new Events(description, start, end);
+                                } catch (Exception e) {
+                                    System.err.println("Warning: Invalid datetime in line: " + s);
+                                }
+                            }
+                            break;
+                        default:
+                            System.err.println("Warning: Unknown task type in line: " + s);
+                            break;
+                    }
+
+                    if (task != null) {
                         if (isDone) {
-                            todo.markAsDone();
+                            task.markAsDone();
                         }
-                        out.add(todo);
-                        break;
-                    case "D":
-                        LocalDate by = LocalDate.parse(p[3]);
-                        Task deadline = new Deadlines(p[2], by);
-                        if (isDone) {
-                            deadline.markAsDone();
-                        }
-                        out.add(deadline);
-                        break;
-                    case "E":
-                        LocalDateTime start = LocalDateTime.parse(p[3]);
-                        LocalDateTime end = LocalDateTime.parse(p[4]);
-                        Task event = new Events(p[2], start, end);
-                        if (isDone) {
-                            event.markAsDone();
-                        }
-                        out.add(event);
-                        break;
-                    default:
-                        // Unknown task type, do nothing
-                        break;
+                        out.add(task);
+                    } else {
+                        System.err.println("Warning: Could not parse line: " + s);
+                    }
+
+                } catch (Exception e) {
+                    System.err.println("Warning: Skipping corrupted line: " + s);
                 }
             }
         } catch (IOException e) {
-            System.err.println("Warning: failed to load tasks: " + e.getMessage());
+            System.err.println("Warning: Could not load tasks from file: " + e.getMessage());
+            System.err.println("Starting with empty task list.");
         }
-
         return out;
     }
 

@@ -17,7 +17,10 @@ public class Parser {
             return new UnknownCommand(":(! input cannot be empty!");
         }
 
-        String[] split = input.split("\\s+", 2);
+        // Normalize multiple spaces to single spaces
+        String normalizedInput = input.trim().replaceAll("\\s+", " ");
+
+        String[] split = normalizedInput.split(" ", 2);
         assert split.length >= 1 : "split should always have at least one element!";
 
         String instruction = split[0].toLowerCase();
@@ -100,21 +103,26 @@ public class Parser {
      */
     private static Command parseSnoozeCommand(String contents) {
         if (contents.isEmpty()) {
-            return new UnknownCommand();
+            return new UnknownCommand(":(! snooze command requires index and duration!");
         }
 
         String[] parts = contents.split("\\s+", 2);
         if (parts.length < 2) {
-            return new UnknownCommand();
+            return new UnknownCommand(":(! snooze format: snooze <index> <duration>");
         }
 
         try {
             int index = Integer.parseInt(parts[0]) - 1;
             assert index >= -1 : "parsed index should be valid (note: -1 will be caught by commands)";
+
+            if (index <= -1) {
+                return new UnknownCommand(":(! task index must be positive!");
+            }
+
             String duration = parts[1];
             return new SnoozeCommand(index, duration);
-        } catch (Exception e) {
-            return new UnknownCommand();
+        } catch (NumberFormatException e) {
+            return new UnknownCommand(":(! task index must be a number!");
         }
     }
 
@@ -138,20 +146,25 @@ public class Parser {
             return new UnknownCommand();
         }
 
-        String[] parts = contents.split("/", 2);
-        if (parts.length < 2) {
-            return new UnknownCommand();
+        if (!contents.contains("/by")) {
+            return new UnknownCommand(":(! deadline command missing '/by'! Format: deadline <description> /by <date>");
         }
 
+        String[] parts = contents.split("/", 2);
         String description = parts[0].trim();
         assert description != null : "deadline description should not be null!";
+
+        if (description.isEmpty()) {
+            return new UnknownCommand(":(! deadline description cannot be empty!");
+        }
+
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            return new UnknownCommand(":(! deadline command missing date after '/by'!");
+        }
 
         String dateStr = parts[1].trim().split("\\s+", 2)[1];
         assert dateStr != null : "deadline due date string should not be null!";
 
-        if (description.isEmpty() || dateStr.isEmpty()) {
-            return new UnknownCommand();
-        }
 
         return new DeadlineCommand(description, dateStr);
     }
@@ -165,23 +178,36 @@ public class Parser {
             return new UnknownCommand();
         }
 
+        if (!contents.contains("/from")) {
+            return new UnknownCommand(":(! event command missing '/from'!");
+        }
+
+        if (!contents.contains("/to")) {
+            return new UnknownCommand(":(! event command missing '/to'!");
+        }
+
+        String[] fromParts = contents.split("/from", 2);
+        String description = fromParts[0].trim();
+
+        if (description.isEmpty()) {
+            return new UnknownCommand(":(! event description cannot be empty!");
+        }
+
+        String[] toParts = fromParts[1].split("/to", 2);
+        if (toParts.length < 2) {
+            return new UnknownCommand(":(! event command missing '/to'!");
+        }
+
         String[] parts = contents.split("/", 3);
         if (parts.length < 2) {
             return new UnknownCommand();
         }
-        assert parts.length >= 3 : "event command should have description, start, and end parts";
 
-        String description = parts[0].trim();
-        assert description != null : "event description should not be null!";
+        String startStr = toParts[0].trim();
+        String endStr = toParts[1].trim();
 
-        String startStr = parts[1].trim().split("\\s+", 2)[1];
-        assert startStr != null : "event start datetime string should not be null!";
-
-        String endStr = parts[2].trim().split("\\s+", 2)[1];
-        assert endStr != null : "event end datetime string should not be null!";
-
-        if (description.isEmpty() || startStr.isEmpty() || endStr.isEmpty()) {
-            return new UnknownCommand();
+        if (startStr.isEmpty() || endStr.isEmpty()) {
+            return new UnknownCommand(":(! event times cannot be empty!");
         }
 
         return new EventCommand(description, startStr, endStr);
@@ -192,7 +218,7 @@ public class Parser {
      */
     private static Command parseIndexCommand(String instruction, String contents) {
         if (contents.isEmpty()) {
-            return new UnknownCommand();
+            return new UnknownCommand(":(! " + instruction + " command requires a task index!");
         }
 
         if (contents.contains(" ")) {
@@ -202,6 +228,10 @@ public class Parser {
         try {
             int index = Integer.parseInt(contents) - 1;
             assert index >= -1 : "parsed index should be valid";
+
+            if (index <= -1) {
+                return new UnknownCommand(":(! task index must be a positive number!");
+            }
 
             switch (instruction) {
                 case "mark":

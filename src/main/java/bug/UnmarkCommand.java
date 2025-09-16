@@ -28,13 +28,21 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
+        if (tasks.size() == 0) {
+            throw new BugException(":(! no tasks available to unark!");
+        }
+
+        if (index < 0 || index >= tasks.size()) {
+            throw new BugException(":(! task index " + (index + 1) + " is out of range! You have " + tasks.size() + " tasks.");
+        }
+
         try {
             Task task = tasks.get(index);
             task.markAsUndone();
             storage.update(tasks);
             return ui.showUndone(task);
         } catch (Exception e) {
-            throw new BugException(":(! no tasks at this index!");
+            throw new BugException(":(! could not unmark task at index " + (index + 1) + "!");
         }
     }
 }

@@ -23,6 +23,7 @@ public class Bug {
         ui = new Ui();
         storage = new Storage();
         TaskList loadedTasks;
+
         try {
             loadedTasks = new TaskList(storage.load());
         } catch (Exception e) {
@@ -68,6 +69,10 @@ public class Bug {
      * @return the response based on the input
      */
     public String getResponse(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return ui.showError(":(! please enter a command!");
+        }
+
         try {
             Command cmd = Parser.parse(input); // Parse the input into a command
             String response = cmd.execute(tasks, ui, storage); // Execute the command
@@ -78,7 +83,9 @@ public class Bug {
 
             return response;
         } catch (BugException e) {
-            return ui.showError(e.getMessage()); // Return error message if command fails
+            return ui.showError(e.getMessage());
+        } catch (Exception e) {
+            return ui.showError(":(! something went wrong! Please try again.");
         }
     }
 

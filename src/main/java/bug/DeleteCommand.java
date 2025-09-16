@@ -6,15 +6,15 @@ package bug;
  */
 public class DeleteCommand extends Command {
 
-    private final int taskIndex;
+    private final int index;
 
     /**
      * Constructor for the DeleteCommand. Initializes the task index to delete.
      *
-     * @param taskIndex the index of the task to delete
+     * @param index the index of the task to delete
      */
-    public DeleteCommand(int taskIndex) {
-        this.taskIndex = taskIndex;
+    public DeleteCommand(int index) {
+        this.index = index;
     }
 
     /**
@@ -29,12 +29,20 @@ public class DeleteCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
+        if (tasks.size() == 0) {
+            throw new BugException(":(! no tasks available to delete!");
+        }
+
+        if (index < 0 || index >= tasks.size()) {
+            throw new BugException(":(! task index " + (index + 1) + " is out of range! You have " + tasks.size() + " tasks.");
+        }
+
         try {
-            Task task = tasks.delete(taskIndex);
+            Task task = tasks.delete(index);
             storage.update(tasks);
             return ui.showDeleted(task, tasks);
         } catch (Exception e) {
-            throw new BugException(":(! no tasks at this index!");
+            throw new BugException(":(! could not mark task at index " + (index + 1) + "!");
         }
     }
 }

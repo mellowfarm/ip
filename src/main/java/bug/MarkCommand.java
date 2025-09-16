@@ -29,13 +29,21 @@ public class MarkCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
+        if (tasks.size() == 0) {
+            throw new BugException(":(! no tasks available to mark!");
+        }
+
+        if (index < 0 || index >= tasks.size()) {
+            throw new BugException(":(! task index " + (index + 1) + " is out of range! You have " + tasks.size() + " tasks.");
+        }
+
         try {
             Task task = tasks.get(index);
             task.markAsDone();
             storage.update(tasks);
             return ui.showDone(task);
         } catch (Exception e) {
-            throw new BugException(":(! no tasks at this index!");
+            throw new BugException(":(! could not mark task at index " + (index + 1) + "!");
         }
     }
 }
