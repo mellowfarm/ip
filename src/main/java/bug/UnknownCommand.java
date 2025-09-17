@@ -12,7 +12,7 @@ public class UnknownCommand extends Command {
      * Default constructor for unknown commands with generic error message.
      */
     public UnknownCommand() {
-        this.errorMessage = ":(! i don't know what you mean! please re-enter your task :)!";
+        this.errorMessage = "I don't know what you mean! Please re-enter your task :)!";
     }
 
     /**

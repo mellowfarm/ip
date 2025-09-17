@@ -40,12 +40,12 @@ public class DeadlineCommand extends Command{
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
         // Validate description
         if (description.isEmpty()) {
-            throw new BugException(":(! a deadline task cannot have an empty description!");
+            throw new BugException("A deadline task cannot have an empty description!");
         }
 
         // Validate due date
         if (dueDate.isEmpty()) {
-            throw new BugException(":(! a deadline task must have a due date!");
+            throw new BugException("A deadline task must have a due date!");
         }
 
         // Parse the due date and create the task
@@ -56,7 +56,7 @@ public class DeadlineCommand extends Command{
             storage.update(tasks); // Update the storage with the new task list
             return ui.showDeadline(deadline, tasks); // Show the response in the UI
         } catch (Exception e) {
-            throw new BugException(":(! invalid date. use yyyy-MM-dd (eg 2005-11-27)!");
+            throw new BugException("Invalid date. use yyyy-MM-dd (eg 2005-11-27)!");
         }
     }
 }

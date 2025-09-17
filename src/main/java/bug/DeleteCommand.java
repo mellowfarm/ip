@@ -30,11 +30,11 @@ public class DeleteCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
         if (tasks.size() == 0) {
-            throw new BugException(":(! no tasks available to delete!");
+            throw new BugException("No tasks available to delete!");
         }
 
         if (index < 0 || index >= tasks.size()) {
-            throw new BugException(":(! task index " + (index + 1) + " is out of range! You have " + tasks.size() + " tasks.");
+            throw new BugException("Task index " + (index + 1) + " is out of range! You have " + tasks.size() + " tasks.");
         }
 
         try {
@@ -42,7 +42,7 @@ public class DeleteCommand extends Command {
             storage.update(tasks);
             return ui.showDeleted(task, tasks);
         } catch (Exception e) {
-            throw new BugException(":(! could not mark task at index " + (index + 1) + "!");
+            throw new BugException("Could not mark task at index " + (index + 1) + "!");
         }
     }
 }

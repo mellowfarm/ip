@@ -31,6 +31,8 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
 
+            stage.setTitle("Bug");
+
             // Set the minimum size for the window
             stage.setMinHeight(220);
             stage.setMinWidth(417);

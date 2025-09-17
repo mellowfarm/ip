@@ -33,7 +33,7 @@ public class FindCommand extends Command{
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
         // Check if the keyword is empty and throw an exception if it is
         if (keyword.isEmpty()) {
-            throw new BugException(":(! what are you searching for?");
+            throw new BugException("What are you searching for?");
         }
 
         // Search for tasks that contain the keyword in their description

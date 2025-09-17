@@ -47,12 +47,12 @@ public class SnoozeCommand extends Command {
             Task task = tasks.get(index);
 
             if (task.getStatusIcon().equals("X")) {
-                throw new BugException(":(! cannot snooze a completed task! unmark it first if needed!");
+                throw new BugException("Cannot snooze a completed task! unmark it first if needed!");
             }
 
             Duration duration = parseDuration(durationString);
             if (duration == null) {
-                throw new BugException(":(! duration cannot be empty!");
+                throw new BugException("Duration cannot be empty!");
             }
             task.snooze(duration);
             storage.update(tasks);
@@ -60,7 +60,7 @@ public class SnoozeCommand extends Command {
         } catch (BugException e) {
             return ui.showError(e.getMessage());
         } catch (Exception e) {
-            throw new BugException(":(! no tasks at this index!");
+            throw new BugException("No tasks at this index!");
         }
     }
 

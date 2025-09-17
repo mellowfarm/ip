@@ -30,7 +30,7 @@ public class TodoCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
         if (description.isEmpty()) {
-            throw new BugException(":(! a todo task cannot have an empty description!");
+            throw new BugException("A todo task cannot have an empty description!");
         }
         Task todo = new ToDos(description);
         tasks.add(todo);

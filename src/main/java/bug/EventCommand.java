@@ -43,15 +43,15 @@ public class EventCommand extends Command{
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
         // Validate the inputs
         if (description.isEmpty()) {
-            throw new BugException(":(! an event task cannot have an empty description!");
+            throw new BugException("An event task cannot have an empty description!");
         }
 
         if (startTime.isEmpty()) {
-            throw new BugException(":(! an event task must have a start date!");
+            throw new BugException("An event task must have a start date!");
         }
 
         if (endTime.isEmpty()) {
-            throw new BugException(":(! an event task must have an end date!");
+            throw new BugException("An event task must have an end date!");
         }
 
         // Parse the start and end times
@@ -63,7 +63,7 @@ public class EventCommand extends Command{
             storage.update(tasks); // Update storage with the new task list
             return ui.showEvent(event, tasks); // Show the event in the UI
         } catch (Exception e) {
-            throw new BugException(":(! invalid datetime. use yyyy-MM-dd HHmm (eg 2005-11-27 1800)!");
+            throw new BugException("Invalid datetime. use yyyy-MM-dd HHmm (eg 2005-11-27 1800)!");
         }
     }
 }

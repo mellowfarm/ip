@@ -1,4 +1,1 @@
-T | 0 | buy groceries
-D | 1 | submit report | 2024-12-15
-E | 0 | team meeting | 2024-12-01T14:00 | 2024-12-01T16:00
-T | 1 | do laundry
+T | 0 | eat

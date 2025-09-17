@@ -29,7 +29,7 @@ public class Ui {
      * Displays a greeting message to the user.
      */
     public String showGreeting() {
-        return "Hello! I'm " + name + "\nWhat can I do for you?";
+        return "Hello :)! I'm " + name + "\nWhat can I do for you?";
     }
 
     /**
