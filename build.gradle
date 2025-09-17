@@ -12,7 +12,7 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
 
-    String javaFxVersion = '17.0.7'
+    String javaFxVersion = '24.0.1'
 
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
@@ -26,6 +26,11 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
+}
+
+wrapper {
+    gradleVersion = '7.6.2'
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 test {
@@ -44,15 +49,6 @@ test {
 
 application {
     mainClass.set("bug.Launcher")
-}
-
-jar {
-    archiveBaseName = 'bug'
-    manifest {
-        attributes (
-            'Main-Class': 'bug.Bug'
-        )
-    }
 }
 
 shadowJar {

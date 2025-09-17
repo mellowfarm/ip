@@ -13,7 +13,7 @@
 }
 
 .dialog-text {
-    -fx-fill: ladder(background, white 49%, black 50%);
+    -fx-fill: black;  /* Replace the ladder() function with this */
     -fx-font-size: 14px;
 }
 
