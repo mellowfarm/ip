@@ -1,10 +1,10 @@
-# Bug User Guide
+# Bug User Guide 🐛
 Bug is a friendly task management chatbot that helps you keep track of your todo items, deadlines, and events through a simple conversational interface! :)
 ![Screenshot of Bug UI](Ui.png)
 
 ---
 
-## Quick Start
+## Quick Start 🚀
 
 1. Ensure you have **Java 17** or above installed on your computer.
 
@@ -24,14 +24,14 @@ Bug is a friendly task management chatbot that helps you keep track of your todo
 
 ---
 
-## Features
+## Features ⚡
 >💡 **Notes about command format:**
 >- Words in `<>` are parameters to be supplied by you
 >- Parameters must be provided in the specified order
 
 ---
 
-### Adding a todo task: `todo`
+### Adding a todo task: `todo` ✅
 Adds a simple task without any date or time.
 **Format:** `todo <description>`
 
@@ -42,7 +42,7 @@ Adds a simple task without any date or time.
 
 ---
 
-### Adding a deadline task: `deadline`
+### Adding a deadline task: `deadline` ⏰
 Adds a task with a specific due date.
 **Format:** `deadline <description> /by <date>`
 - `<date>` must be in `YYYY-MM-DD` format
@@ -53,7 +53,7 @@ Adds a task with a specific due date.
 
 ---
 
-### Adding an event task: `event`
+### Adding an event task: `event` 📅
 Adds a task with a specific start and end time.
 **Format:** `event <description> /from <start_datetime> /to <end_datetime>`
 - `<start_datetime>` and `<end_datetime>` must be in `YYYY-MM-DD HHMM` format
@@ -64,7 +64,7 @@ Adds a task with a specific start and end time.
 
 ---
 
-### Listing all tasks: `list`
+### Listing all tasks: `list` 📋
 Shows a list of all tasks in your task list.
 **Format:** `list`
 
@@ -85,7 +85,7 @@ your tasks are here:
 
 ---
 
-### Marking a task as done: `mark`
+### Marking a task as done: `mark` ✔️
 Marks the specified task as completed.
 **Format:** `mark <index>`
 
@@ -94,7 +94,7 @@ Marks the specified task as completed.
 
 ---
 
-### Marking a task as not done: `unmark`
+### Marking a task as not done: `unmark` ↩️
 Marks the specified task as not completed.
 **Format:** `unmark <index>`
 
@@ -103,7 +103,7 @@ Marks the specified task as not completed.
 
 ---
 
-### Deleting a task: `delete`
+### Deleting a task: `delete` 🗑️
 Permanently removes the specified task from your task list.
 **Format:** `delete <index>`
 
@@ -113,7 +113,7 @@ Permanently removes the specified task from your task list.
 
 ---
 
-### Finding tasks: `find`
+### Finding tasks: `find` 🔍
 Finds tasks whose descriptions contain the given keyword.
 **Format:** `find <keyword>`
 - The search is **case-sensitive**
@@ -131,7 +131,7 @@ your matching tasks are here:
 
 ---
 
-### Snoozing a task: `snooze`
+### Snoozing a task: `snooze` 💤
 Postpones a deadline or event task by the specified duration.
 **Format:** `snooze <index> <duration>`
 
@@ -150,13 +150,13 @@ Postpones a deadline or event task by the specified duration.
 
 ---
 
-### Exiting the program: `bye`
+### Exiting the program: `bye` 👋
 Exits the Bug application.
 **Format:** `bye`
 
 ---
 
-# Command Summary
+# Command Summary 📝
 
 | Action | Format | Example |
 |--------|--------|---------|
@@ -171,3 +171,7 @@ Exits the Bug application.
 | Find Tasks | `find KEYWORD` | `find meeting` |
 | Snooze Task | `snooze INDEX DURATION` | `snooze 1 2d` |
 | Exit | `bye` | `bye` |
+
+---
+
+_Happy task managing with Bug!_ 🐛✨
