@@ -1,5 +1,6 @@
 package storage;
 
+import exception.BugException;
 import task.*;
 
 import java.io.FileWriter;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,94 +28,112 @@ public class Storage {
      * Loads all tasks from the storage file.
      * Creates data directory if it doesn't exist, handles missing or corrupted files gracefully.
      *
-     * @return list of loaded tasks, or empty list if file doesn't exist or is corrupted
+     * @return list of loaded tasks, or empty list if file doesn't exist
+     * @throws BugException if critical storage errors occur that prevent loading
      */
-    public List<Task> load() {
-        List<Task> out = new ArrayList<>(); // Accumulate loaded tasks in the desired format
+    public List<Task> load() throws BugException {
+        List<Task> tasks = new ArrayList<>();
 
         try {
-            // Ensure the parent directory exists, create it if necessary
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent()); // gets the folder that should contain the data & create the folder
-            }
+            ensureDataDirectoryExists();
 
-            // If the file doesn't exist or is empty, return an empty list
             if (Files.notExists(path) || Files.size(path) == 0) {
-                return out;
+                return tasks;
             }
 
-            // Read all lines from the file
-            for (String line : Files.readAllLines(path, StandardCharsets.UTF_8)) {
-                String s = line.trim();
-                if (s.isEmpty()) { // Skip blank lines
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+
+            for (int lineNumber = 0; lineNumber < lines.size(); lineNumber++) {
+                String line = lines.get(lineNumber).trim();
+                if (line.isEmpty()) {
                     continue;
                 }
 
                 try {
-                    // Split the line into its components
-                    String[] p = s.split("\\s*\\|\\s*");
-
-                    if (p.length < 3) {
-                        System.err.println("Warning: Skipping invalid line (not enough data): " + s);
-                        continue;
-                    }
-
-                    String type = p[0];
-                    boolean isDone = "1".equals(p[1]);
-                    String description = p[2];
-
-                    // Create the appropriate task object based on the type
-                    Task task = null;
-                    switch (type) {
-                        case "T":
-                            if (p.length == 3) {
-                                task = new ToDos(description);
-                            }
-                            break;
-                        case "D":
-                            if (p.length == 4) {
-                                try {
-                                    LocalDate by = LocalDate.parse(p[3]);
-                                    task = new Deadlines(description, by);
-                                } catch (Exception e) {
-                                    System.err.println("Warning: Invalid date in line: " + s);
-                                }
-                            }
-                            break;
-                        case "E":
-                            if (p.length == 5) {
-                                try {
-                                    LocalDateTime start = LocalDateTime.parse(p[3]);
-                                    LocalDateTime end = LocalDateTime.parse(p[4]);
-                                    task = new Events(description, start, end);
-                                } catch (Exception e) {
-                                    System.err.println("Warning: Invalid datetime in line: " + s);
-                                }
-                            }
-                            break;
-                        default:
-                            System.err.println("Warning: Unknown task type in line: " + s);
-                            break;
-                    }
-
+                    Task task = parseTaskFromLine(line);
                     if (task != null) {
-                        if (isDone) {
-                            task.markAsDone();
-                        }
-                        out.add(task);
-                    } else {
-                        System.err.println("Warning: Could not parse line: " + s);
+                        tasks.add(task);
                     }
-
                 } catch (Exception e) {
-                    System.err.println("Warning: Skipping corrupted line: " + s);
+                    // Log warning but continue processing other lines
+                    System.err.println("Warning: Skipping corrupted line " + (lineNumber + 1) + ": " + line);
                 }
             }
         } catch (IOException e) {
-            System.err.println("Warning: Could not load tasks from file: " + e.getMessage());
-            System.err.println("Starting with empty task list.");
+            throw new BugException("Failed to read tasks from storage file: " + e.getMessage());
         }
-        return out;
+
+        return tasks;
+    }
+
+    /**
+     * Parses a single line from the storage file into a Task object.
+     *
+     * @param line the line to parse
+     * @return the parsed Task, or null if parsing fails
+     * @throws BugException if the line format is invalid
+     */
+    private Task parseTaskFromLine(String line) throws BugException {
+        String[] parts = line.split("\\s*\\|\\s*");
+
+        if (parts.length < 3) {
+            throw new BugException("Invalid task format: insufficient data");
+        }
+
+        String type = parts[0];
+        boolean isDone = "1".equals(parts[1]);
+        String description = parts[2];
+
+        Task task;
+        try {
+            switch (type) {
+                case "T":
+                    if (parts.length != 3) {
+                        throw new BugException("Invalid Todo format: expected 3 parts");
+                    }
+                    task = new ToDos(description);
+                    break;
+                case "D":
+                    if (parts.length != 4) {
+                        throw new BugException("Invalid Deadline format: expected 4 parts");
+                    }
+                    LocalDate dueDate = LocalDate.parse(parts[3]);
+                    task = new Deadlines(description, dueDate);
+                    break;
+                case "E":
+                    if (parts.length != 5) {
+                        throw new BugException("Invalid Event format: expected 5 parts");
+                    }
+                    LocalDateTime start = LocalDateTime.parse(parts[3]);
+                    LocalDateTime end = LocalDateTime.parse(parts[4]);
+                    task = new Events(description, start, end);
+                    break;
+                default:
+                    throw new BugException("Unknown task type: " + type);
+            }
+
+            if (isDone) {
+                task.markAsDone();
+            }
+            return task;
+        } catch (DateTimeParseException e) {
+            throw new BugException("Invalid date format in task: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Ensures the data directory exists, creating it if necessary.
+     *
+     * @throws BugException if directory creation fails
+     */
+    private void ensureDataDirectoryExists() throws BugException {
+        try {
+            if (path.getParent() != null) {
+                Files.createDirectories(path.getParent());
+            }
+        } catch (IOException e) {
+            throw new BugException("Failed to create data directory: " + e.getMessage());
+        }
     }
 
     /**
@@ -121,25 +141,20 @@ public class Storage {
      * Overwrites existing file content with current task list in pipe-separated format.
      *
      * @param tasks the task list to save to file
+     * @throws BugException if saving fails
      */
-    public void update(TaskList tasks) {
+    public void update(TaskList tasks) throws BugException {
         try {
-            // Ensure the parent directory exists, create it if necessary
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
-            }
+            ensureDataDirectoryExists();
 
-            // Write each task to the file
-            FileWriter fw = new FileWriter(path.toFile());
-            for (int i = 0; i < tasks.size(); i++) {
-                fw.write(tasks.get(i).toFileString());
-                fw.write(System.lineSeparator());
+            try (FileWriter writer = new FileWriter(path.toFile())) {
+                for (int i = 0; i < tasks.size(); i++) {
+                    writer.write(tasks.get(i).toFileString());
+                    writer.write(System.lineSeparator());
+                }
             }
-            fw.close();
         } catch (IOException e) {
-            System.err.println("Failed to save: " + e.getMessage());
+            throw new BugException("Failed to save tasks to storage: " + e.getMessage());
         }
-
     }
-
 }

@@ -160,6 +160,12 @@ public class Parser {
      * @param contents should contain description and date separated by /by
      * @return DeadlineCommand or UnknownCommand if format is invalid
      */
+    /**
+     * Parses the deadline command with description and date validation.
+     *
+     * @param contents should contain description and date separated by /by
+     * @return DeadlineCommand or UnknownCommand if format is invalid
+     */
     private static Command parseDeadlineCommand(String contents) {
         if (contents.isEmpty()) {
             return new UnknownCommand("Deadline command should be in the format: deadline <description> /by <date>!");
@@ -169,9 +175,18 @@ public class Parser {
             return new UnknownCommand("Deadline command missing '/by'! Format: deadline <description> /by <date>");
         }
 
+        return createDeadlineFromParts(contents);
+    }
+
+    /**
+     * Creates a DeadlineCommand from parsed command parts.
+     *
+     * @param contents the command contents containing description and date
+     * @return DeadlineCommand or UnknownCommand if validation fails
+     */
+    private static Command createDeadlineFromParts(String contents) {
         String[] parts = contents.split("/", 2);
         String description = parts[0].trim();
-        assert description != null : "Deadline description should not be null!";
 
         if (description.isEmpty()) {
             return new UnknownCommand("Deadline description cannot be empty!");
@@ -182,16 +197,13 @@ public class Parser {
         }
 
         String dateStr = parts[1].trim().split("\\s+", 2)[1];
-        assert dateStr != null : "Deadline due date string should not be null!";
-
-
         return new DeadlineCommand(description, dateStr);
     }
 
     /**
-     * Parses the event command with description, start time, and end time validation.
+     * Parses the event command with comprehensive validation.
      *
-     * @param contents should contain description, start time, and end time with /from and /to separators
+     * @param contents should contain description, start time, and end time
      * @return EventCommand or UnknownCommand if format is invalid
      */
     private static Command parseEventCommand(String contents) {
@@ -199,14 +211,44 @@ public class Parser {
             return new UnknownCommand("Event command should be in the format: event <description> /from <start> /to <end>!");
         }
 
+        if (!hasRequiredEventSeparators(contents)) {
+            return getEventSeparatorError(contents);
+        }
+
+        return createEventFromParts(contents);
+    }
+
+    /**
+     * Checks if the event command has required /from and /to separators.
+     *
+     * @param contents the command contents to check
+     * @return true if both separators are present
+     */
+    private static boolean hasRequiredEventSeparators(String contents) {
+        return contents.contains("/from") && contents.contains("/to");
+    }
+
+    /**
+     * Returns appropriate error for missing event separators.
+     *
+     * @param contents the command contents to check
+     * @return UnknownCommand with specific error message
+     */
+    private static Command getEventSeparatorError(String contents) {
         if (!contents.contains("/from")) {
             return new UnknownCommand("Event command missing '/from'!");
-        }
-
-        if (!contents.contains("/to")) {
+        } else {
             return new UnknownCommand("Event command missing '/to'!");
         }
+    }
 
+    /**
+     * Creates an EventCommand from parsed command parts.
+     *
+     * @param contents the command contents to parse
+     * @return EventCommand or UnknownCommand if validation fails
+     */
+    private static Command createEventFromParts(String contents) {
         String[] fromParts = contents.split("/from", 2);
         String description = fromParts[0].trim();
 
@@ -219,11 +261,6 @@ public class Parser {
             return new UnknownCommand("Event command missing '/to'!");
         }
 
-        String[] parts = contents.split("/", 3);
-        if (parts.length < 2) {
-            return new UnknownCommand();
-        }
-
         String startStr = toParts[0].trim();
         String endStr = toParts[1].trim();
 
@@ -233,6 +270,7 @@ public class Parser {
 
         return new EventCommand(description, startStr, endStr);
     }
+
 
     /**
      * Parses index-based commands (mark, unmark, delete) with index validation.

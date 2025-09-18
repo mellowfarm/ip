@@ -30,24 +30,39 @@ public class DeleteCommand extends Command {
      * @param ui the user interface for displaying confirmation
      * @param storage the storage system for persisting changes
      * @return confirmation message showing the deleted task
-     * @throws BugException if no tasks exist or the index is out of bounds
+     * @throws BugException if no tasks exist, index is out of bounds, or storage fails
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
+        validateTaskExists(tasks);
+        validateIndex(tasks);
+
+        Task task = tasks.delete(index);
+        storage.update(tasks);
+        return ui.showDeleted(task, tasks);
+    }
+
+    /**
+     * Validates that tasks exist in the list.
+     *
+     * @param tasks the task list to validate
+     * @throws BugException if no tasks exist
+     */
+    private void validateTaskExists(TaskList tasks) throws BugException {
         if (tasks.size() == 0) {
             throw new BugException("No tasks available to delete!");
         }
+    }
 
+    /**
+     * Validates that the index is within bounds.
+     *
+     * @param tasks the task list to check bounds against
+     * @throws BugException if index is out of bounds
+     */
+    private void validateIndex(TaskList tasks) throws BugException {
         if (index < 0 || index >= tasks.size()) {
             throw new BugException("Task index " + (index + 1) + " is out of range! You have " + tasks.size() + " tasks.");
-        }
-
-        try {
-            Task task = tasks.delete(index);
-            storage.update(tasks);
-            return ui.showDeleted(task, tasks);
-        } catch (Exception e) {
-            throw new BugException("Could not mark task at index " + (index + 1) + "!");
         }
     }
 }

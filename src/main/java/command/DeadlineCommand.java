@@ -8,6 +8,7 @@ import ui.Ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Command to create a deadline task with a specific due date.
@@ -37,29 +38,35 @@ public class DeadlineCommand extends Command {
      * @param ui the user interface for displaying confirmation
      * @param storage the storage system for persisting the task
      * @return confirmation message showing the created deadline
-     * @throws BugException if the description is empty, date is missing, or date format is invalid
+     * @throws BugException if the description is empty, date is missing, date format is invalid, or storage fails
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {
-        // Validate description
+        validateInputs();
+
+        try {
+            LocalDate by2 = LocalDate.parse(dueDate, INPUT_DT);
+            Deadlines deadline = new Deadlines(description, by2);
+            tasks.add(deadline);
+            storage.update(tasks);
+            return ui.showDeadline(deadline, tasks);
+        } catch (DateTimeParseException e) {
+            throw new BugException("Invalid date format. Use yyyy-MM-dd (e.g., 2005-11-27)");
+        }
+    }
+
+    /**
+     * Validates the input parameters for the deadline command.
+     *
+     * @throws BugException if validation fails
+     */
+    private void validateInputs() throws BugException {
         if (description.isEmpty()) {
             throw new BugException("A deadline task cannot have an empty description!");
         }
 
-        // Validate due date
         if (dueDate.isEmpty()) {
             throw new BugException("A deadline task must have a due date!");
-        }
-
-        // Parse the due date and create the task
-        try {
-            LocalDate by2 = LocalDate.parse(dueDate, INPUT_DT);
-            Deadlines deadline = new Deadlines(description, by2);
-            tasks.add(deadline); // Add the task to the list
-            storage.update(tasks); // Update the storage with the new task list
-            return ui.showDeadline(deadline, tasks); // Show the response in the UI
-        } catch (Exception e) {
-            throw new BugException("Invalid date. use yyyy-MM-dd (eg 2005-11-27)!");
         }
     }
 }
