@@ -1,3 +1,3 @@
-T | 0 | do laundry
 D | 0 | submit ip | 2025-09-22
 E | 1 | welcome dinner | 2025-09-19T23:00 | 2025-09-20T02:00
+T | 0 | buy brandy
