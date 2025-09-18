@@ -6,20 +6,18 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * Represents the command to list all tasks in the task management application.
- * This command displays the tasks from the current task list if there are any tasks.
- * If the task list is empty, an exception is thrown.
+ * Command to display all tasks in the current task list.
+ * Shows all tasks with their indices and completion status.
  */
 public class ListCommand extends Command {
 
     /**
-     * Executes the ListCommand by displaying all tasks in the task list.
-     * If the task list is empty, a BugException is thrown.
+     * Executes the list command by displaying all tasks.
      *
-     * @param tasks the current list of tasks
-     * @param ui the user interface used to display the list
-     * @param storage the storage used to save the tasks (not used in this command)
-     * @return a response message showing the list of tasks
+     * @param tasks the task list to display
+     * @param ui the user interface for showing the task list
+     * @param storage the storage system (unused)
+     * @return formatted list of all tasks
      * @throws BugException if the task list is empty
      */
     @Override

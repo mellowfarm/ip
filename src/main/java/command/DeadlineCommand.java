@@ -10,9 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents a command to create a deadline task.
- * This command is responsible for parsing the deadline's description and due date,
- * creating the corresponding `Deadlines` object, and updating the task list and storage.
+ * Command to create a deadline task with a specific due date.
+ * Parses task description and due date, then adds the task to the list.
  */
 public class DeadlineCommand extends Command {
 
@@ -21,11 +20,10 @@ public class DeadlineCommand extends Command {
     private static final DateTimeFormatter INPUT_DT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
-     * Constructor for the DeadlineCommand.
-     * Initializes the task description and due date.
+     * Creates a new deadline command.
      *
-     * @param description the description of the task
-     * @param dueDate the due date of the task in "yyyy-MM-dd" format
+     * @param description the task description
+     * @param dueDate the due date in yyyy-MM-dd format
      */
     public DeadlineCommand(String description, String dueDate) {
         this.description = description;
@@ -33,14 +31,13 @@ public class DeadlineCommand extends Command {
     }
 
     /**
-     * Executes the DeadlineCommand by validating the input, parsing the due date,
-     * creating a new `Deadlines` task, and updating the task list and storage.
+     * Executes the deadline command by creating and storing a new deadline task.
      *
-     * @param tasks the current list of tasks
-     * @param ui the user interface used to display the response
-     * @param storage the storage used to save the tasks
-     * @return a response message showing the created deadline task
-     * @throws BugException if the input is invalid, such as an empty description or invalid date format
+     * @param tasks the task list to add the deadline to
+     * @param ui the user interface for displaying confirmation
+     * @param storage the storage system for persisting the task
+     * @return confirmation message showing the created deadline
+     * @throws BugException if the description is empty, date is missing, or date format is invalid
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {

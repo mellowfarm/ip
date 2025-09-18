@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Represents a list of tasks in the task management application.
- * This class provides methods for adding, removing, and finding tasks in the list.
+ * Manages a collection of tasks with operations for adding, removing, and searching.
+ * Provides a wrapper around ArrayList with additional task-specific functionality.
  */
 public class TaskList {
 
     private final List<Task> tasks;
 
     /**
-     * Constructor to initialize an empty task list.
+     * Creates a new empty task list.
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -20,9 +20,9 @@ public class TaskList {
     }
 
     /**
-     * Constructor to initialize the task list with a given list of tasks.
+     * Creates a new task list initialized with the provided tasks.
      *
-     * @param init the initial list of tasks
+     * @param init the initial list of tasks to copy
      */
     public TaskList(List<Task> init) {
         assert init != null : "initial task list cannot be null!";
@@ -31,9 +31,9 @@ public class TaskList {
     }
 
     /**
-     * Returns the number of tasks in the task list.
+     * Returns the number of tasks in the list.
      *
-     * @return the size of the task list
+     * @return the current size of the task list
      */
     public int size() {
         assert tasks != null : "task list should never be null!";
@@ -41,9 +41,9 @@ public class TaskList {
     }
 
     /**
-     * Adds a new task to the task list.
+     * Adds a new task to the end of the list.
      *
-     * @param task the task to be added
+     * @param task the task to add
      */
     public void add(Task task) {
         assert task != null : "cannot add null task to tak list!";
@@ -52,10 +52,10 @@ public class TaskList {
     }
 
     /**
-     * Deletes a task at the specified index from the task list.
+     * Removes and returns the task at the specified index.
      *
-     * @param index the index of the task to delete
-     * @return the task that was removed
+     * @param index the zero-based index of the task to remove
+     * @return the removed task
      */
     public Task delete(int index) {
         assert tasks != null : "task list should never be null!";
@@ -65,9 +65,9 @@ public class TaskList {
     }
 
     /**
-     * Retrieves a task at the specified index.
+     * Returns the task at the specified index without removing it.
      *
-     * @param index the index of the task to retrieve
+     * @param index the zero-based index of the task to retrieve
      * @return the task at the specified index
      */
     public Task get(int index) {
@@ -78,10 +78,11 @@ public class TaskList {
     }
 
     /**
-     * Finds tasks whose description contains the specified keyword.
+     * Finds all tasks whose descriptions contain the specified keyword.
+     * Performs case-sensitive substring matching.
      *
-     * @param keyword the keyword to search for in the task descriptions
-     * @return a list of tasks that contain the keyword in their description
+     * @param keyword the text to search for in task descriptions
+     * @return list of tasks containing the keyword (may be empty)
      */
     public ArrayList<Task> findTasks(String keyword) {
         assert keyword != null : "search keyword cannot be null!";

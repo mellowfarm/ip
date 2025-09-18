@@ -1,4 +1,5 @@
 package bug;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,8 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Represents the main window of the task management application.
- * This class handles user interaction, displaying dialogs, and managing the UI.
+ * Controller for the main JavaFX window of the Bug application.
+ * Handles user input, displays chat dialogs, and manages the GUI interaction flow.
+ * Coordinates between user interface elements and the Bug application logic.
  */
 public class MainWindow extends AnchorPane {
 
@@ -30,7 +32,7 @@ public class MainWindow extends AnchorPane {
     private Image bugImage = new Image(this.getClass().getResourceAsStream("/images/sonny2.png"));
 
     /**
-     * Initializes the MainWindow by binding the scroll position to the dialog container height.
+     * Initializes the main window by setting up scroll behavior.
      */
     @FXML
     public void initialise() {
@@ -38,9 +40,9 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Sets the Bug instance, allowing interaction with the core application logic.
+     * Sets the Bug application instance and displays the initial greeting.
      *
-     * @param b the Bug instance to be set
+     * @param b the Bug application instance to connect with
      */
     public void setBug(Bug b) {
         bug = b;
@@ -49,8 +51,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Handles the user input when the send button is pressed.
-     * It retrieves the input, gets a response from the Bug, and displays both in the dialog container.
+     * Handles user input when the send button is pressed or enter key is hit.
+     * Processes the command through Bug and displays both user input and bot response.
      */
     @FXML
     private void handleUserInput() {

@@ -1,4 +1,5 @@
 package bug;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,17 +9,17 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * The main entry point for the JavaFX application.
- * This class initializes the application window and sets up the UI components.
+ * JavaFX application entry point for the Bug task management system.
+ * Initializes and displays the main application window with proper sizing and styling.
  */
 public class Main extends Application {
 
     private Bug bug = new Bug(); // The core logic of the task management app
 
     /**
-     * Starts the JavaFX application by loading the main window FXML and displaying it.
+     * Starts the JavaFX application by loading the main window and setting up the scene.
      *
-     * @param stage the primary stage for the application
+     * @param stage the primary stage for the application window
      */
     @Override
     public void start(Stage stage) {

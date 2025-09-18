@@ -7,30 +7,30 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * Represents the command to mark a task as not done.
- * This command marks a specific task in the task list as undone based on the given index.
+ * Command to mark a task as not completed.
+ * Updates the task's completion status and saves changes to storage.
  */
 public class UnmarkCommand extends Command {
 
     private final int index;
 
     /**
-     * Represents the command to mark a task as not done.
-     * This command marks a specific task in the task list as undone based on the given index.
+     * Creates a new unmark command for the specified task index.
+     *
+     * @param index the zero-based index of the task to mark as not done
      */
     public UnmarkCommand(int index) {
         this.index = index;
     }
 
     /**
-     * Executes the UnmarkCommand by marking the task at the specified index as undone.
-     * If the task index is invalid (out of bounds), a BugException is thrown.
+     * Executes the unmark command by setting the task as not completed.
      *
-     * @param tasks the current list of tasks
-     * @param ui the user interface used to display the result
-     * @param storage the storage used to save the tasks
-     * @return a response message showing the task that was marked as undone
-     * @throws BugException if the task index is invalid or out of bounds
+     * @param tasks the task list containing the task to unmark
+     * @param ui the user interface for displaying confirmation
+     * @param storage the storage system for persisting changes
+     * @return confirmation message showing the uncompleted task
+     * @throws BugException if no tasks exist or the index is out of bounds
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {

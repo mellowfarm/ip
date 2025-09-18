@@ -8,30 +8,29 @@ import task.ToDos;
 import ui.Ui;
 
 /**
- * Represents the command to create a Todo task.
- * This command parses the description for the Todo task, creates the task, and updates the task list and storage.
+ * Command to create a simple todo task without any dates.
+ * Validates the task description and adds the todo to the task list.
  */
 public class TodoCommand extends Command {
 
     private final String description;
 
     /**
-     * Constructor for creating a TodoCommand with a description.
+     * Creates a new todo command with the specified description.
      *
-     * @param description the description of the Todo task
+     * @param description the todo task description
      */
     public TodoCommand(String description) {
         this.description = description;
     }
 
     /**
-     * Executes the TodoCommand by creating a new Todo task and adding it to the task list.
-     * If the description is empty, a BugException is thrown.
+     * Executes the todo command by creating and storing a new todo task.
      *
-     * @param tasks the current list of tasks
-     * @param ui the user interface used to display the result
-     * @param storage the storage used to save the tasks
-     * @return a response message showing the created Todo task
+     * @param tasks the task list to add the todo to
+     * @param ui the user interface for displaying confirmation
+     * @param storage the storage system for persisting the task
+     * @return confirmation message showing the created todo
      * @throws BugException if the description is empty
      */
     @Override

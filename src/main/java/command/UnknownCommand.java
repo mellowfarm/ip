@@ -5,36 +5,36 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * Represents an unknown command that is triggered when the user enters an unrecognized command.
- * This command returns an error message indicating that the input is invalid.
+ * Command representing unrecognized or invalid user input.
+ * Returns appropriate error messages for various types of input failures.
  */
 public class UnknownCommand extends Command {
 
     private final String errorMessage;
 
     /**
-     * Default constructor for unknown commands with generic error message.
+     * Creates an unknown command with a default error message.
      */
     public UnknownCommand() {
         this.errorMessage = "I don't know what you mean! Please re-enter your task :)!";
     }
 
     /**
-     * Constructor with custom error message for specific format errors.
+     * Creates an unknown command with a specific error message.
      *
-     * @param errorMessage the specific error message to display
+     * @param errorMessage the custom error message to display
      */
     public UnknownCommand(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
     /**
-     * Executes the UnknownCommand, displaying an error message to the user when the input is unrecognized.
+     * Executes the unknown command by displaying the error message.
      *
-     * @param tasks the current list of tasks (not used in this command)
-     * @param ui the user interface used to display the error message
-     * @param storage the storage used to save the tasks (not used in this command)
-     * @return a response message indicating that the command was unrecognized
+     * @param tasks the task list (unused)
+     * @param ui the user interface for displaying the error
+     * @param storage the storage system (unused)
+     * @return the error message explaining why the command failed
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {

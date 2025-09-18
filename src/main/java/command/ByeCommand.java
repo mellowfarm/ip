@@ -5,19 +5,18 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * Represents the 'Bye' command, which is used to exit the task management application.
- * When executed, it displays a farewell message and indicates that the program should terminate.
+ * Command to exit the Bug application.
+ * Displays a farewell message and signals application termination.
  */
 public class ByeCommand extends Command {
 
     /**
-     * Executes the 'Bye' command by displaying a farewell message.
-     * This method is called when the user wants to exit the application.
+     * Executes the bye command by showing a farewell message.
      *
-     * @param tasks the current list of tasks (not used in this command)
-     * @param ui the user interface responsible for displaying messages to the user
-     * @param storage the storage system (not used in this command)
-     * @return a farewell message to the user
+     * @param tasks the task list (unused)
+     * @param ui the user interface for displaying the farewell message
+     * @param storage the storage system (unused)
+     * @return the farewell message
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
@@ -25,10 +24,9 @@ public class ByeCommand extends Command {
     }
 
     /**
-     * Returns true to indicate that this command causes the program to exit.
-     * This method is used to signal the end of the program's execution.
+     * Indicates that this command terminates the application.
      *
-     * @return true, indicating that the program should terminate
+     * @return true to signal application exit
      */
     @Override
     public boolean isExit() {

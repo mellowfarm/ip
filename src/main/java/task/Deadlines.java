@@ -5,9 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.Duration;
 
 /**
- * Represents a deadline task in the task management application.
- * This class extends the Task class and includes a description of the task
- * and its due date.
+ * Represents a task with a specific deadline.
+ * Extends the base Task class with due date functionality and snooze capability.
  */
 public class Deadlines extends Task {
 
@@ -15,10 +14,10 @@ public class Deadlines extends Task {
     private static final DateTimeFormatter PRETTY = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
     /**
-     * Constructor for creating a new deadline task.
+     * Creates a new deadline task.
      *
-     * @param description the description of the task
-     * @param dueDate the due date of the task
+     * @param description the task description
+     * @param dueDate the due date for the task
      */
     public Deadlines(String description, LocalDate dueDate) {
         super(description); // Initialize the description in the parent Task class
@@ -26,10 +25,9 @@ public class Deadlines extends Task {
     }
 
     /**
-     * Returns a string representation of the deadline task, including its description
-     * and due date formatted in a user-friendly way.
+     * Returns a formatted string representation of the deadline task.
      *
-     * @return the string representation of the deadline task
+     * @return string showing task status, description, and formatted due date
      */
     @Override
     public String toString() {
@@ -37,10 +35,9 @@ public class Deadlines extends Task {
     }
 
     /**
-     * Returns a string representation of the deadline task formatted for saving to a file.
-     * The format includes the task's status, description, and due date.
+     * Returns the file storage format for this deadline task.
      *
-     * @return the string representation of the deadline task for file storage
+     * @return pipe-separated string for file storage
      */
     @Override
     public String toFileString() {
@@ -49,8 +46,10 @@ public class Deadlines extends Task {
     }
 
     /**
-     * Snoozes the deadline task by adding the given duration to the due date.
-     * @param duration the duration to snooze the task by
+     * Snoozes the deadline by the specified duration.
+     * Converts duration to days and adds to the due date.
+     *
+     * @param duration the time to postpone the deadline
      */
     @Override
     public void snooze(Duration duration) {

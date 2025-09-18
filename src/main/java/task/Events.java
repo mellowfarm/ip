@@ -5,9 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.Duration;
 
 /**
- * Represents an event task in the task management application.
- * This class extends the Task class and includes the description of the task,
- * as well as the start and end times of the event.
+ * Represents a task with specific start and end times.
+ * Extends the base Task class with event scheduling and snooze functionality.
  */
 public class Events extends Task {
     protected LocalDateTime start; // The start time of the event
@@ -15,9 +14,9 @@ public class Events extends Task {
     private static final DateTimeFormatter PRETTY = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
 
     /**
-     * Constructor for creating an event task.
+     * Creates a new event task.
      *
-     * @param description the description of the event
+     * @param description the event description
      * @param start the start time of the event
      * @param end the end time of the event
      */
@@ -28,10 +27,9 @@ public class Events extends Task {
     }
 
     /**
-     * Returns a string representation of the event task, including its description,
-     * start time, and end time, formatted in a user-friendly way.
+     * Returns a formatted string representation of the event task.
      *
-     * @return the string representation of the event task
+     * @return string showing task status, description, and formatted time range
      */
     @Override
     public String toString() {
@@ -39,10 +37,9 @@ public class Events extends Task {
     }
 
     /**
-     * Returns a string representation of the event task formatted for saving to a file.
-     * The format includes the task's status, description, start time, and end time.
+     * Returns the file storage format for this event task.
      *
-     * @return the string representation of the event task for file storage
+     * @return pipe-separated string for file storage
      */
     @Override
     public String toFileString() {
@@ -51,9 +48,10 @@ public class Events extends Task {
     }
 
     /**
-     * Snoozes the event task by adding the given duration to both start and end times.
-     * This preserves the event duration while moving it to a later time.
-     * @param duration the duration to snooze the task by
+     * Snoozes the event by the specified duration.
+     * Moves both start and end times by the same duration to preserve event length.
+     *
+     * @param duration the time to postpone the event
      */
     @Override
     public void snooze(Duration duration) {

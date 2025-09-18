@@ -11,8 +11,9 @@ import ui.Ui;
 import java.util.Scanner;
 
 /**
- * The Bug class is the entry point of the task management application.
- * It interacts with the user, manages tasks, and stores them in a file.
+ * Main application class for the Bug task management system.
+ * Handles user interaction, command processing, and application lifecycle.
+ * Serves as the entry point and coordinator between UI, storage, and task management components.
  */
 public class Bug {
 
@@ -21,8 +22,8 @@ public class Bug {
     private final Ui ui;
 
     /**
-     * Constructor initializes the application by setting up the user interface (UI),
-     * loading tasks from storage, and preparing the task list.
+     * Initializes the Bug application with UI, storage, and task list components.
+     * Loads existing tasks from storage or starts with an empty list if loading fails.
      */
     public Bug() {
         ui = new Ui();
@@ -32,14 +33,14 @@ public class Bug {
         try {
             loadedTasks = new TaskList(storage.load());
         } catch (Exception e) {
-            ui.showError(":(! failed to load tasks!");
+            ui.showError("Failed to load tasks!");
             loadedTasks = new TaskList();
         }
         tasks = loadedTasks;
     }
 
     /**
-     * Runs the application, accepting user input and executing commands in a loop.
+     * Runs the application in console mode with continuous user input processing.
      */
     public void run() {
         Scanner sc = new Scanner(System.in);
@@ -67,11 +68,11 @@ public class Bug {
     }
 
     /**
-     * Returns the response to a given user input.
-     * This is used for testing purposes or when the application needs to respond programmatically.
+     * Processes a single user input and returns the response.
+     * Used for GUI mode and testing.
      *
-     * @param input the user input to process
-     * @return the response based on the input
+     * @param input the user command to process
+     * @return the response message
      */
     public String getResponse(String input) {
         if (input == null || input.trim().isEmpty()) {
@@ -94,14 +95,19 @@ public class Bug {
         }
     }
 
+    /**
+     * Returns the application greeting message.
+     *
+     * @return the greeting message
+     */
     public String greeting() {
         return ui.showGreeting();
     }
 
     /**
-     * The main method is the entry point for the application. It starts the task management system.
+     * Main entry point for console application.
      *
-     * @param args the command-line arguments (not used)
+     * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
         Bug bug = new Bug(); // Create an instance of the Bug class

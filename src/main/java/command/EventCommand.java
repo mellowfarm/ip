@@ -10,9 +10,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents a command to create an event task.
- * This command parses the event's description, start time, and end time,
- * creates the corresponding `Events` object, and updates the task list and storage.
+ * Command to create an event task with start and end times.
+ * Parses task description and time range, then adds the event to the list.
  */
 public class EventCommand extends Command {
 
@@ -23,11 +22,11 @@ public class EventCommand extends Command {
     private static final DateTimeFormatter INPUT_DT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /**
-     * Constructor for creating an EventCommand.
+     * Creates a new event command.
      *
-     * @param description the description of the event
-     * @param startTime the start time of the event in "yyyy-MM-dd HHmm" format
-     * @param endTime the end time of the event in "yyyy-MM-dd HHmm" format
+     * @param description the event description
+     * @param startTime the start time in yyyy-MM-dd HHmm format
+     * @param endTime the end time in yyyy-MM-dd HHmm format
      */
     public EventCommand(String description, String startTime, String endTime) {
         this.description = description;
@@ -36,14 +35,13 @@ public class EventCommand extends Command {
     }
 
     /**
-     * Executes the EventCommand by validating the input, parsing the start and end times,
-     * creating a new `Events` task, and updating the task list and storage.
+     * Executes the event command by creating and storing a new event task.
      *
-     * @param tasks the current list of tasks
-     * @param ui the user interface used to display the response
-     * @param storage the storage used to save the tasks
-     * @return a response message showing the created event task
-     * @throws BugException if any input is invalid (e.g., empty fields or invalid date format)
+     * @param tasks the task list to add the event to
+     * @param ui the user interface for displaying confirmation
+     * @param storage the storage system for persisting the task
+     * @return confirmation message showing the created event
+     * @throws BugException if any field is empty or datetime format is invalid
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {

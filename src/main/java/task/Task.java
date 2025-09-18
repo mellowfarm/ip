@@ -5,18 +5,19 @@ import exception.BugException;
 import java.time.Duration;
 
 /**
- * Represents a task in the task management application.
- * A task has a description and a status indicating whether it's completed or not.
+ * Abstract base class representing a task in the Bug application.
+ * Provides common functionality for task description, completion status, and basic operations.
+ * Subclasses implement specific task types with additional features like dates and snoozing.
  */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
 
     /**
-     * Constructor to initialize a task with a description.
-     * The task is initially set as not done.
+     * Creates a new task with the specified description.
+     * Task is initially marked as not completed.
      *
-     * @param description the description of the task
+     * @param description the task description text
      */
     public Task(String description) {
         this.description = description;
@@ -24,43 +25,41 @@ public abstract class Task {
     }
 
     /**
-     * Returns the status icon representing the task's completion status.
+     * Returns the visual status indicator for the task.
      *
-     * @return "X" if the task is done, " " (empty space) if it's not done
+     * @return "X" if completed, " " if not completed
      */
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
 
     /**
-     * Returns the description of the task.
+     * Returns the task description.
      *
-     * @return the task's description
+     * @return the task's description text
      */
     public String getDescription(){
         return this.description;
     }
 
     /**
-     * Marks the task as done.
-     * This updates the task's status to "done".
+     * Marks the task as completed.
      */
     public void markAsDone() {
         this.isDone = true;
     }
 
     /**
-     * Marks the task as undone.
-     * This updates the task's status to "not done".
+     * Marks the task as not completed.
      */
     public void markAsUndone() {
         this.isDone = false;
     }
 
     /**
-     * Returns a string representation of the task in the format "[status] description".
+     * Returns a formatted string representation of the task.
      *
-     * @return a string that includes the status and the description
+     * @return string showing completion status and description
      */
     @Override
     public String toString() {
@@ -68,13 +67,20 @@ public abstract class Task {
     }
 
     /**
-     * Returns a string representation of the task formatted for saving to a file.
-     * Subclasses must implement this method to provide specific file string formats.
+     * Returns the file storage representation of the task.
+     * Must be implemented by subclasses to define their storage format.
      *
-     * @return a string that represents the task in a file-friendly format
+     * @return pipe-separated string for file storage
      */
     public abstract String toFileString();
 
+    /**
+     * Snoozes the task by the specified duration.
+     * Default implementation throws exception for tasks without dates (like todos).
+     *
+     * @param duration the time period to postpone the task
+     * @throws BugException if the task type doesn't support snoozing
+     */
     public void snooze(Duration duration) throws BugException {
         throw new BugException("Cannot snooze todos, they have no dates!");
     }

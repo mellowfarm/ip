@@ -7,31 +7,30 @@ import task.TaskList;
 import ui.Ui;
 
 /**
- * Represents the command to mark a task as done.
- * This command marks a specific task in the task list as done based on the given index.
+ * Command to mark a task as completed.
+ * Updates the task's completion status and saves changes to storage.
  */
 public class MarkCommand extends Command {
 
     private final int index;
 
     /**
-     * Constructor for creating a MarkCommand to mark a task as done at the specified index.
+     * Creates a new mark command for the specified task index.
      *
-     * @param index the index of the task to mark as done
+     * @param index the zero-based index of the task to mark as done
      */
     public MarkCommand(int index) {
         this.index = index;
     }
 
     /**
-     * Executes the MarkCommand by marking the task at the specified index as done.
-     * If the task index is invalid (out of bounds), a BugException is thrown.
+     * Executes the mark command by setting the task as completed.
      *
-     * @param tasks the current list of tasks
-     * @param ui the user interface used to display the result
-     * @param storage the storage used to save the tasks
-     * @return a response message showing the task that was marked as done
-     * @throws BugException if the task index is invalid or out of bounds
+     * @param tasks the task list containing the task to mark
+     * @param ui the user interface for displaying confirmation
+     * @param storage the storage system for persisting changes
+     * @return confirmation message showing the completed task
+     * @throws BugException if no tasks exist or the index is out of bounds
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {

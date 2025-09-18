@@ -3,16 +3,17 @@ package ui;
 import command.*;
 
 /**
- * Parser class responsible for parsing user input and converting it into Command objects.
- * Handles validation and error cases gracefully by returning appropriate commands.
+ * Parses user input strings and converts them into executable Command objects.
+ * Handles input validation, normalization, and command type determination.
+ * Implements robust parsing with comprehensive error handling and validation.
  */
 public class Parser {
 
     /**
-     * Parses user input string and returns the appropriate Command object.
+     * Parses user input and returns the appropriate command object.
      *
-     * @param input the user input string to parse
-     * @return a Command object corresponding to the input, or UnknownCommand if invalid
+     * @param input the raw user input string to parse
+     * @return the corresponding Command object, or UnknownCommand if parsing fails
      */
     public static Command parse(String input) {
         if (input == null || input.isBlank()) {
@@ -69,7 +70,10 @@ public class Parser {
     }
 
     /**
-     * Parses find command.
+     * Parses the find command with keyword validation.
+     *
+     * @param contents the search keyword
+     * @return FindCommand or UnknownCommand if invalid
      */
     private static Command parseFind(String contents) {
         if (contents.isEmpty()) {
@@ -80,7 +84,10 @@ public class Parser {
     }
 
     /**
-     * Parses bye command, it should have no additional parameters.
+     * Parses the bye command (should have no parameters).
+     *
+     * @param contents should be empty for valid bye command
+     * @return ByeCommand or UnknownCommand if parameters provided
      */
     private static Command parseBye(String contents) {
         if (!contents.isEmpty()) {
@@ -90,7 +97,10 @@ public class Parser {
     }
 
     /**
-     * Parses list command, it should have no additional parameters.
+     * Parses the list command (should have no parameters).
+     *
+     * @param contents should be empty for valid list command
+     * @return ListCommand or UnknownCommand if parameters provided
      */
     private static Command parseList(String contents) {
         if (!contents.isEmpty()) {
@@ -100,8 +110,10 @@ public class Parser {
     }
 
     /**
-     * Parses snooze command with format: "snooze <index> <duration>"
-     * Example: "snooze 1 3d"
+     * Parses the snooze command with index and duration validation.
+     *
+     * @param contents should contain index and duration (e.g., "1 3d")
+     * @return SnoozeCommand or UnknownCommand if format is invalid
      */
     private static Command parseSnoozeCommand(String contents) {
         if (contents.isEmpty()) {
@@ -129,7 +141,10 @@ public class Parser {
     }
 
     /**
-     * Parses todo command.
+     * Parses the todo command with description validation.
+     *
+     * @param contents the task description
+     * @return TodoCommand or UnknownCommand if description is empty
      */
     private static Command parseTodo(String contents) {
         if (contents.isEmpty()) {
@@ -140,8 +155,10 @@ public class Parser {
     }
 
     /**
-     * Parses deadline command with format: "deadline <description> /by <date>"
-     * Example: "deadline finish project /by 2025-12-31"
+     * Parses the deadline command with description and date validation.
+     *
+     * @param contents should contain description and date separated by /by
+     * @return DeadlineCommand or UnknownCommand if format is invalid
      */
     private static Command parseDeadlineCommand(String contents) {
         if (contents.isEmpty()) {
@@ -172,8 +189,10 @@ public class Parser {
     }
 
     /**
-     * Parses event command with format: "event <description> /from <start> /to <end>"
-     * Example: "event team meeting /from 2025-12-31 1400 /to 2025-12-31 1500"
+     * Parses the event command with description, start time, and end time validation.
+     *
+     * @param contents should contain description, start time, and end time with /from and /to separators
+     * @return EventCommand or UnknownCommand if format is invalid
      */
     private static Command parseEventCommand(String contents) {
         if (contents.isEmpty()) {
@@ -216,7 +235,11 @@ public class Parser {
     }
 
     /**
-     * Parses index-based commands (mark, unmark, delete).
+     * Parses index-based commands (mark, unmark, delete) with index validation.
+     *
+     * @param instruction the command type (mark, unmark, or delete)
+     * @param contents should contain a single positive integer
+     * @return appropriate Command or UnknownCommand if index is invalid
      */
     private static Command parseIndexCommand(String instruction, String contents) {
         if (contents.isEmpty()) {

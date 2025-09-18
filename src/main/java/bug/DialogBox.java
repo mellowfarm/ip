@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -16,8 +15,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 /**
- * A custom dialog box for displaying messages in the task management application.
- * The dialog box includes a label for the message text and an image for the display picture.
+ * Custom JavaFX component representing a dialog box in the chat interface.
+ * Displays messages with accompanying display pictures for user and bot conversations.
+ * Supports flipping layout to differentiate between user and bot messages.
  */
 public class DialogBox extends HBox {
     @FXML
@@ -26,10 +26,10 @@ public class DialogBox extends HBox {
     private ImageView displayPicture; // The image view for the display picture
 
     /**
-     * Constructor for creating a DialogBox with text and an image.
+     * Creates a dialog box with the specified text and image.
      *
      * @param text the message text to display
-     * @param img the image to display in the dialog box
+     * @param img the display picture to show alongside the message
      */
     private DialogBox(String text, Image img) {
         try {
@@ -50,8 +50,8 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Flips the dialog box such that the ImageView is on the left and the text is on the right.
-     * This is used for the "bug" messages to show the text on the opposite side.
+     * Flips the dialog box layout to show image on the left and text on the right.
+     * Used for bot messages to differentiate from user messages.
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
@@ -62,22 +62,22 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Creates a DialogBox for the user message, with text and a user image.
+     * Creates a dialog box for user messages.
      *
-     * @param text the user message text
-     * @param img the user display picture
-     * @return a DialogBox with the user message and image
+     * @param text the user's message text
+     * @param img the user's display picture
+     * @return a new dialog box formatted for user messages
      */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img); // Return a new dialog box for the user
     }
 
     /**
-     * Creates a DialogBox for the bug message, with text and a bug image, and flips it.
+     * Creates a dialog box for bot messages.
      *
-     * @param text the bug message text
-     * @param img the bug display picture
-     * @return a flipped DialogBox for the bug message and image
+     * @param text the bot's response text
+     * @param img the bot's display picture
+     * @return a new flipped dialog box formatted for bot messages
      */
     public static DialogBox getBugDialog(String text, Image img) {
         var db = new DialogBox(text, img); // Create a new dialog box for the bug

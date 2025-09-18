@@ -2,16 +2,15 @@ package bug;
 import javafx.application.Application;
 
 /**
- * A launcher class to workaround classpath issues and launch the JavaFX application.
- * This class is necessary for running the JavaFX application when using a build tool like Maven or Gradle,
- * as it provides a clean entry point for the application.
+ * Application launcher to workaround classpath issues with JavaFX.
+ * Provides a clean entry point for the JavaFX application when using build tools.
  */
 public class Launcher {
 
     /**
-     * The main method serves as the entry point for launching the JavaFX application.
+     * Main entry point for launching the JavaFX Bug application.
      *
-     * @param args command-line arguments passed to the application (not used in this case)
+     * @param args command-line arguments passed to the application
      */
     public static void main(String[] args) {
         // Launch the main JavaFX application

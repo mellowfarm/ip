@@ -1,24 +1,25 @@
 package task;
 
 /**
- * Represents a Todo task in the task management application.
- * This class extends the Task class and includes the description of the task.
+ * Represents a simple todo task without any associated dates.
+ * Extends the base Task class with todo-specific display formatting.
+ * Cannot be snoozed since it has no deadline or schedule.
  */
 public class ToDos extends Task {
 
     /**
-     * Constructor for creating a new Todo task with a given description.
+     * Creates a new todo task.
      *
-     * @param description the description of the Todo task
+     * @param description the todo task description
      */
     public ToDos(String description) {
         super(description);
     }
 
     /**
-     * Returns a string representation of the Todo task, including its description and status.
+     * Returns a formatted string representation of the todo task.
      *
-     * @return the string representation of the Todo task
+     * @return string showing "[T]" prefix with task status and description
      */
     @Override
     public String toString() {
@@ -26,10 +27,9 @@ public class ToDos extends Task {
     }
 
     /**
-     * Returns a string representation of the Todo task formatted for saving to a file.
-     * The format includes the task's status, description, and task type.
+     * Returns the file storage format for this todo task.
      *
-     * @return the string representation of the Todo task for file storage
+     * @return pipe-separated string: "T | status | description"
      */
     @Override
     public String toFileString() {

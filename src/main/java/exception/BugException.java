@@ -1,15 +1,15 @@
 package exception;
 
 /**
- * Custom exception class to handle errors specific to the Bug application.
- * This class extends the built-in Exception class to provide custom error messages.
+ * Custom exception for Bug application-specific errors.
+ * Provides meaningful error messages for various failure scenarios.
  */
 public class BugException extends Exception {
 
     /**
-     * Constructs a new BugException with the specified detail message.
+     * Creates a new BugException with the specified error message.
      *
-     * @param message the detail message to be passed to the exception
+     * @param message the error message describing what went wrong
      */
     public BugException(String message) {
         super(message);

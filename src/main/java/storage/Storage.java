@@ -14,28 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Storage class handles loading and saving tasks to and from a file.
- * It provides methods to read tasks from a file, parse them into appropriate task objects,
- * and update the file with the current task list.
- *
- * Tasks are stored in a text file in the following format:
- * <ul>
- *     <li>T | status | description</li>
- *     <li>D | status | description | due date</li>
- *     <li>E | status | description | start date | end date</li>
- * </ul>
- * This class also handles file creation if the file doesn't exist.
+ * Handles persistent storage of tasks to and from files.
+ * Manages file I/O operations, task serialization, and data directory creation.
+ * Uses pipe-separated format: T|status|description, D|status|description|date, E|status|description|start|end
  */
 public class Storage {
     private static final String FILE_NAME = "bug.txt";
     private final Path path = Paths.get("data", FILE_NAME);
 
     /**
-     * Loads tasks from the storage file and returns them as a list of Task objects.
-     * If the file is empty or does not exist, an empty list is returned.
-     * The method parses the task data and creates appropriate task objects (e.g. Todo, Deadline, Event).
+     * Loads all tasks from the storage file.
+     * Creates data directory if it doesn't exist, handles missing or corrupted files gracefully.
      *
-     * @return a list of tasks loaded from the storage file, or an empty list if the file is empty or not found
+     * @return list of loaded tasks, or empty list if file doesn't exist or is corrupted
      */
     public List<Task> load() {
         List<Task> out = new ArrayList<>(); // Accumulate loaded tasks in the desired format
@@ -126,10 +117,10 @@ public class Storage {
     }
 
     /**
-     * Updates the task file with the current list of tasks.
-     * It writes each task in the list to the file in a specific format
+     * Saves all tasks to the storage file.
+     * Overwrites existing file content with current task list in pipe-separated format.
      *
-     * @param tasks the list of tasks to be written to the file
+     * @param tasks the task list to save to file
      */
     public void update(TaskList tasks) {
         try {

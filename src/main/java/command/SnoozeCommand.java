@@ -11,24 +11,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Represents a command to snooze a task by postponing its deadline or event times.
- * This command works with deadline and event tasks by adding a specified duration to their dates.
- * Todo tasks cannot be snoozed since they don't have associated dates.
- *
- * Supports flexible duration formats:
- * - Days: "3d" (snooze by 3 days)
- * - Hours: "5h" (snooze by 5 hours)
- * - Minutes: "30m" (snooze by 30 minutes)
+ * Command to postpone a task's deadline or event times by a specified duration.
+ * Supports flexible duration formats like "3d", "5h", "30m" for days, hours, and minutes.
+ * Cannot be applied to completed tasks or todo tasks without dates.
  */
 public class SnoozeCommand extends Command {
     private final int index;
     private final String durationString;
 
     /**
-     * Constructor for creating a SnoozeCommand.
+     * Creates a new snooze command.
      *
-     * @param index the index of the task to snooze (0-based indexing)
-     * @param durationString the duration string in format like "3d", "5h", or "30m"
+     * @param index the zero-based index of the task to snooze
+     * @param durationString the duration in format "3d", "5h", or "30m"
      */
     public SnoozeCommand(int index, String durationString) {
         this.index = index;
@@ -36,16 +31,13 @@ public class SnoozeCommand extends Command {
     }
 
     /**
-     * Executes the SnoozeCommand by postponing the specified task's deadline or event times.
-     * Validates the task index and duration format, then applies the snooze operation.
-     * Updates the task list in storage and displays a confirmation message.
+     * Executes the snooze command by postponing the task's dates.
      *
-     * @param tasks the current list of tasks to operate on
-     * @param ui the user interface used to display responses and error messages
-     * @param storage the storage system used to persist the updated task list
-     * @return a response message showing the snoozed task with updated dates
-     * @throws BugException if the task index is invalid, duration format is incorrect,
-     *                     or the task type doesn't support snoozing
+     * @param tasks the task list containing the task to snooze
+     * @param ui the user interface for displaying confirmation or errors
+     * @param storage the storage system for persisting changes
+     * @return confirmation message showing the snoozed task with updated dates
+     * @throws BugException if task is completed, index is invalid, or duration format is wrong
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException{
@@ -71,16 +63,11 @@ public class SnoozeCommand extends Command {
     }
 
     /**
-     * Parses a duration string into a Duration object.
-     * Supports three time units with specific format: number followed by unit letter.
+     * Parses duration strings into Duration objects.
+     * Supports "3d" (days), "5h" (hours), "30m" (minutes) formats.
      *
-     * Supported formats:
-     * - "3d" for 3 days
-     * - "5h" for 5 hours
-     * - "30m" for 30 minutes
-     *
-     * @param durationString the duration string to parse (e.g., "3d", "5h", "30m")
-     * @return a Duration object representing the parsed time period, or null if the format is invalid
+     * @param durationString the duration string to parse
+     * @return Duration object or null if format is invalid
      */
     private static Duration parseDuration(String durationString) {
         Pattern pattern = Pattern.compile("(\\d+)([dhm])"); // match number + unit (d for days, h for hours, m for minutes)

@@ -9,31 +9,30 @@ import ui.Ui;
 import java.util.ArrayList;
 
 /**
- * Represents the command to find tasks that match a given keyword.
- * This command searches for tasks whose description contains the specified keyword.
+ * Command to search for tasks containing a specific keyword.
+ * Searches task descriptions and returns matching tasks.
  */
 public class FindCommand extends Command {
 
     private final String keyword;
 
     /**
-     * Constructor for creating a FindCommand.
+     * Creates a new find command with the specified search keyword.
      *
-     * @param keyword the keyword to search for in the task descriptions
+     * @param keyword the text to search for in task descriptions
      */
     public FindCommand(String keyword) {
         this.keyword = keyword;
     }
 
     /**
-     * Executes the FindCommand by searching for tasks that match the provided keyword.
-     * If the keyword is empty, a BugException is thrown.
+     * Executes the find command by searching for tasks containing the keyword.
      *
-     * @param tasks the current list of tasks
-     * @param ui the user interface used to display the result
-     * @param storage the storage used to save the tasks (not used in this command)
-     * @return a response message showing the tasks that match the keyword
-     * @throws BugException if the keyword is empty or if an error occurs while searching
+     * @param tasks the task list to search through
+     * @param ui the user interface for displaying search results
+     * @param storage the storage system (unused)
+     * @return message showing all matching tasks
+     * @throws BugException if the keyword is empty
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BugException {

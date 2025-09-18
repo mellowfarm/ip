@@ -7,47 +7,53 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
- * The Ui class handles all user interface interactions.
- * It is responsible for displaying messages to the user, reading input and displaying task-related information
- * (e.g. task lists, errors, etc.).
- * The class provides methods for greeting the user, showing a list of tasks, marking tasks as done, and handling errors
+ * Handles all user interface interactions for the Bug application.
+ * Provides methods for displaying messages, reading input, and formatting output.
+ * Centralizes all user-facing text and formatting for consistency.
  */
 public class Ui {
     private final Scanner sc = new Scanner(System.in);
     private final String name;
 
-
+    /**
+     * Creates a new user interface with the default application name.
+     */
     public Ui() {
         name = "Bug";
     }
 
     /**
-     * Displays a greeting message to the user.
+     * Returns the application greeting message.
+     *
+     * @return welcome message introducing the application
      */
     public String showGreeting() {
         return "Hello :)! I'm " + name + "\nWhat can I do for you?";
     }
 
     /**
-     * Displays a goodbye message to the user.
+     * Returns the farewell message for application exit.
+     *
+     * @return goodbye message
      */
     public String showBye() {
         return "Bye. Hope to see you again soon!";
     }
 
     /**
-     * Reads a line of input from the user.
+     * Reads a line of input from the user console.
      *
-     * @return the input string from the user, or null if no input is available
+     * @return the user's input line, or null if no input available
      */
     public String readLine() {
         return sc.hasNextLine() ? sc.nextLine() : null;
     }
 
     /**
-     * Displays a list of tasks to the user.
+     * Formats and returns a numbered list of all tasks.
      *
-     * @param tasks the TaskList containing all tasks to be displayed.
+     * @param tasks the task list to display
+     * @return formatted string showing all tasks with indices
      */
     public String showList(TaskList tasks) {
         StringBuilder list = new StringBuilder();
@@ -59,9 +65,10 @@ public class Ui {
     }
 
     /**
-     * Displays a message confirming that a task has been marked as done.
+     * Returns confirmation message for marking a task as completed.
      *
      * @param task the task that was marked as done
+     * @return confirmation message showing the completed task
      */
     public String showDone(Task task) {
         return "Nice! I've marked this task as done:\n[" + task.getStatusIcon() + "] " +
@@ -69,9 +76,10 @@ public class Ui {
     }
 
     /**
-     * Displays a message confirming that a task has been marked as not done.
+     * Returns confirmation message for marking a task as not completed.
      *
-     * @param task the task that was marked as not done
+     * @param task the task that was marked as undone
+     * @return confirmation message showing the uncompleted task
      */
     public String showUndone(Task task) {
         return "OK, I've marked this task as not done yet:\n[" + task.getStatusIcon() + "] " +
@@ -79,10 +87,11 @@ public class Ui {
     }
 
     /**
-     * Displays a message confirming that a task has been deleted.
+     * Returns confirmation message for task deletion.
      *
      * @param task the task that was deleted
-     * @param tasks the updated TaskList
+     * @param tasks the updated task list for showing new count
+     * @return confirmation message showing deleted task and remaining count
      */
     public String showDeleted(Task task, TaskList tasks) {
         return "Ok! I've removed this task:\n" + task.toString() + "\nNow you have " + tasks.size() +
@@ -90,10 +99,11 @@ public class Ui {
     }
 
     /**
-     * Displays a message confirming that a new ToDo task has been added.
+     * Returns confirmation message for todo task creation.
      *
-     * @param todo the ToDo task that was added
-     * @param tasks the updated TaskList
+     * @param todo the todo task that was created
+     * @param tasks the updated task list for showing new count
+     * @return confirmation message showing created todo and task count
      */
     public String showToDo(Task todo, TaskList tasks) {
         return "Ok! I've added this task:\n" + todo.toString() + "\nNow you have " +
@@ -101,10 +111,11 @@ public class Ui {
     }
 
     /**
-     * Displays a message confirming that a new Deadline task has been added.
+     * Returns confirmation message for deadline task creation.
      *
-     * @param deadline the Deadline task that was added
-     * @param tasks the updated TaskList
+     * @param deadline the deadline task that was created
+     * @param tasks the updated task list for showing new count
+     * @return confirmation message showing created deadline and task count
      */
     public String showDeadline(Task deadline, TaskList tasks) {
         return "Ok! I've added this task:\n" + deadline.toString() +
@@ -112,10 +123,11 @@ public class Ui {
     }
 
     /**
-     * Displays a message confirming that a new Event task has been added.
+     * Returns confirmation message for event task creation.
      *
-     * @param event the Event task that was added
-     * @param tasks the updated TaskList
+     * @param event the event task that was created
+     * @param tasks the updated task list for showing new count
+     * @return confirmation message showing created event and task count
      */
     public String showEvent(Task event, TaskList tasks) {
         return "Ok! I've added this task:\n" + event.toString() +
@@ -123,19 +135,20 @@ public class Ui {
     }
 
     /**
-     * Displays an error message to the user.
+     * Returns the provided error message without additional formatting.
      *
      * @param error the error message to display
+     * @return the error message as provided
      */
     public String showError(String error) {
         return error;
     }
 
     /**
-     * Displays a list of tasks that match a search query.
+     * Formats and returns a numbered list of tasks matching a search.
      *
-     * @param matches the list of matching tasks
-     * @return a formatted string of the matching tasks
+     * @param matches the list of tasks that matched the search criteria
+     * @return formatted string showing matching tasks with indices
      */
     public String showFoundTasks(ArrayList<Task> matches) {
         StringBuilder list = new StringBuilder();
@@ -147,11 +160,10 @@ public class Ui {
     }
 
     /**
-     * Displays a message confirming that a task has been snoozed.
-     * Shows the task with its updated date/time information after snoozing.
+     * Returns confirmation message for task snoozing.
      *
-     * @param task the task that was snoozed with updated deadline or event times
-     * @return a formatted string showing the confirmation message and the snoozed task details
+     * @param task the task that was snoozed with updated dates
+     * @return confirmation message showing the snoozed task
      */
     public String showSnooze(Task task) {
         return "OK, I've snoozed this task:\n" + task.toString();
