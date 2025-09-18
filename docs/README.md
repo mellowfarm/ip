@@ -25,38 +25,38 @@ Bug is a friendly task management chatbot that helps you keep track of your todo
 >- Words in `<>` are parameters to be supplied by you
 >- Parameters must be provided in the specified order
 ---
-### Adding a todo task:`todo`
+### Adding a todo task: `todo`
 Adds a simple task without any date or time.
-<br/>**Format:**`todo <description>`
+**Format:** `todo <description>`
 
-<br/>**Examples:**
+**Examples:**
 - `todo buy groceries`
 - `todo buy brandy yay!`
 - `todo do laundry`
 ---
-### Adding a deadline task:`deadline`
+### Adding a deadline task: `deadline`
 Adds a task with a specific due date.
-<br/>**Format:**`deadline <description> /by <date>`
-- `<date>`must be in`YYYY-MM-DD`format
+**Format:** `deadline <description> /by <date>`
+- `<date>` must be in `YYYY-MM-DD` format
 
-<br/>**Examples:**
+**Examples:**
 - `deadline submit assignment /by 2025-12-31`
 - `deadline pay bills /by 2025-11-15`
 ---
-### Adding an event task:`event`
+### Adding an event task: `event`
 Adds a task with a specific start and end time.
-<br/>**Format:**`event <description> /from <start_datetime> /to <end_datetime>`
-- `<start_datetime>`and`<end_datetime>`must be in`YYYY-MM-DD HHMM`format
+**Format:** `event <description> /from <start_datetime> /to <end_datetime>`
+- `<start_datetime>` and `<end_datetime>` must be in `YYYY-MM-DD HHMM` format
 
-<br/>**Examples:**
+**Examples:**
 - `event team meeting /from 2025-10-20 1400 /to 2025-10-20 1600`
 - `event birthday party /from 2025-12-25 1800 /to 2025-12-25 2200`
 ---
-### Listing all tasks:`list`
+### Listing all tasks: `list`
 Shows a list of all tasks in your task list.
-<br/>**Format:**`list`
+**Format:** `list`
 
-<br/>**Sample output:**
+**Sample output:**
 ```text
 your tasks are here:
 1.[T][ ] buy groceries
@@ -64,64 +64,71 @@ your tasks are here:
 3.[E][ ] team meeting (from: 20 Oct 2025 14:00 to: 20 Oct 2025 16:00)
 ```
 ### Task Type Indicators:
-- `[T]`= Todo task
-- `[D]`= Deadline task
-- `[E]`= Event task
+- `[T]` = Todo task
+- `[D]` = Deadline task
+- `[E]` = Event task
 ### Status Indicators:
-- `[ ]`= Not completed
-- `[X]`= Completed
+- `[ ]` = Not completed
+- `[X]` = Completed
 ---
-### Marking a task as not done:`unmark`
+### Marking a task as done: `mark`
+Marks the specified task as completed.
+**Format:** `mark <index>`
+
+**Examples:**
+- `mark 2` marks the 2nd task as completed
+---
+### Marking a task as not done: `unmark`
 Marks the specified task as not completed.
-<br/>**Format:**`unmark <index>`
+**Format:** `unmark <index>`
 
-<br/>**Examples:**
-- `unmark 1`marks the 1st task as not completed
+**Examples:**
+- `unmark 1` marks the 1st task as not completed
 ---
-### Deleting a task:`delete`
+### Deleting a task: `delete`
 Permanently removes the specified task from your task list.
-<br/>**Format:**`delete <index>`
+**Format:** `delete <index>`
 
-<br/>**Examples:**
-- `delete 3`deletes the 3rd task
-- `list`followed by `delete 1`deletes the 1st task shown
+**Examples:**
+- `delete 3` deletes the 3rd task
+- `list` followed by `delete 1` deletes the 1st task shown
 ---
-### Finding tasks:`find`
+### Finding tasks: `find`
 Finds tasks whose descriptions contain the given keyword.
-<br/>**Format:**`find <keyword>`
+**Format:** `find <keyword>`
 - The search is **case-sensitive**
 
-<br/>**Examples:**
-- `find book`returns tasks containing "book" in their description
-- `find meeting`returns all tasks with "meeting" in the description
+**Examples:**
+- `find book` returns tasks containing "book" in their description
+- `find meeting` returns all tasks with "meeting" in the description
 
-<br/>**Sample output:**
+**Sample output:**
 ```text
 your matching tasks are here:
 1.[E][ ] team meeting (from: 20 Oct 2025 14:00 to: 20 Oct 2025 16:00)
 2.[D][ ] prepare meeting agenda (by: 19 Oct 2025)
 ```
 ---
-### Snoozing a task:`snooze`
+### Snoozing a task: `snooze`
 Postpones a deadline or event task by the specified duration.
-**Format:**`snooze <index duration>`
+**Format:** `snooze <index> <duration>`
 
 **Duration formats:**
-- `Xd`for X days (eg `3d`= 3 days)
-- `Xh`for X hours (eg `5h`= 5 hours)
-- `Xm` for X minutes (eg `30m`= 30 minutes)
+- `Xd` for X days (e.g., `3d` = 3 days)
+- `Xh` for X hours (e.g., `5h` = 5 hours)
+- `Xm` for X minutes (e.g., `30m` = 30 minutes)
 
 **Examples:**
-- `snooze 1 2d`postpones the 1st task by 2 days
-- `snooze 3 5h`postpones the 3rd task by 5 hours
+- `snooze 1 2d` postpones the 1st task by 2 days
+- `snooze 3 5h` postpones the 3rd task by 5 hours
 
 **Note:**
 - Cannot snooze completed tasks
 - Cannot snooze todo tasks (they have no dates)
 ---
-### Exiting the program:`bye`
+### Exiting the program: `bye`
 Exits the Bug application.
-**Format:**`bye`
+**Format:** `bye`
 ---
 # Command Summary
 
