@@ -1,102 +1,140 @@
 # Bug User Guide
-![Screenshot of Bug UI](Ui.png)
 Bug is a friendly task management chatbot that helps you keep track of your todo items, deadlines, and events through a simple conversational interface! :)
-
+![Screenshot of Bug UI](Ui.png)
+---
 ## Quick Start
-1. Download the latest bug.jar file from the releases
-2. Double-click the jar file to launch Bug
-3. Type commands in the text box and press Enter or click "Send"
-4. Bug will respond and help you manage your tasks!
 
+1. Ensure you have **Java 17** or above installed on your computer.
+
+2. Download the latest `bug.jar` file from the [releases page](https://github.com/yourusername/bug/releases).
+
+3. Copy the file to the folder you want to use as the home folder for Bug.
+
+4. Open a command terminal, navigate to the folder containing the jar file, and run:
+```bash
+   java -jar bug.jar
+```
+5. A GUI similar to the one shown above should appear in a few seconds.
+6. Type commands in the command box and press Enter to execute them. For example:
+    - type `list` to view all your tasks
+    - type `todo buy milk` to add a simple task
+7. Refer to the <u>Features</u> section below for details of each command.
+---
 ## Features
-### Adding Tasks
-#### Add a Todo Task
-Add a simple task without a specific date.
-</br>Format: todo <description>
-</br>Example:
-* todo buy groceries
-* todo do laundry
-#### Add a Deadline Task
-Add a task with a due date.
-</br>Format: deadline <description> /by <date>
-* Date format: yyyy-MM-dd
+>💡 **Notes about command format:**
+>- Words in `<>` are parameters to be supplied by you
+>- Parameters must be provided in the specified order
+---
+### Adding a todo task:`todo`
+Adds a simple task without any date or time.
+<br/>**Format:**`todo <description>`
 
-Example:
-* deadline submit assignment /by 2025-10-15
-* deadline pay bills /by 2025-12-01
-#### Add an Event Task
-Add a task with start and end times.
-</br>Format: event <description> /from <start> /to <end>
-* DateTime format: yyyy-MM-dd HHmm
+<br/>**Examples:**
+- `todo buy groceries`
+- `todo buy brandy yay!`
+- `todo do laundry`
+---
+### Adding a deadline task:`deadline`
+Adds a task with a specific due date.
+<br/>**Format:**`deadline <description> /by <date>`
+- `<date>`must be in`YYYY-MM-DD`format
 
-Example:
-* event project meeting /from 2024-10-15 1400 /to 2024-10-15 1600
-* event birthday party /from 2024-12-25 1800 /to 2024-12-25 2200
-### Managing Tasks
-#### List All Tasks
-View all your current tasks.
-<br/>Format: list
-#### Mark Task as Done
-Mark a completed task.
-<br/>Format: mark <task number>
-<br/>Example: mark 1
-#### Unmark Task
-Mark a task as not done.
-<br/>Format: unmark <task number>
-<br/>Example: unmark 2
-#### Delete Task
-Remove a task from your list.
-<br/>Format: delete <task number>
-<br/>Example: delete 3
-### Finding Tasks
-#### Search Tasks
-Find tasks containing specific keywords.
-<br/>Format: find <keyword>
-<br/>Example:
-* find book - finds tasks containing "book"
-* find meeting - finds tasks containing "meeting"
-### Advanced Features
-#### Snooze Tasks
-Postpone deadline or event tasks by a specified duration.
-<br/>Format: snooze <task number> <duration>
-* Duration format: <number><unit> where unit is d (days), h (hours), or m (minutes)
+<br/>**Examples:**
+- `deadline submit assignment /by 2025-12-31`
+- `deadline pay bills /by 2025-11-15`
+---
+### Adding an event task:`event`
+Adds a task with a specific start and end time.
+<br/>**Format:**`event <description> /from <start_datetime> /to <end_datetime>`
+- `<start_datetime>`and`<end_datetime>`must be in`YYYY-MM-DD HHMM`format
 
-Example:
-* snooze 1 3d - postpone task 1 by 3 days
-* snooze 2 2h - postpone task 2 by 2 hours
-  *Note: Todo tasks cannot be snoozed as they don't have dates.*
-### Other Commands
-#### Exit
-Close Bug.
-<br/>Format: bye
-### Tips
-* Task numbers start from 1 and are shown when you use the list command
-* Bug automatically saves your tasks, so you won't lose them when you close the application
-* If you make a mistake in a command, Bug will show you a helpful error message
-* Commands are case-insensitive, so LIST, list, and List all work the same way
-### Command Summary
+<br/>**Examples:**
+- `event team meeting /from 2025-10-20 1400 /to 2025-10-20 1600`
+- `event birthday party /from 2025-12-25 1800 /to 2025-12-25 2200`
+---
+### Listing all tasks:`list`
+Shows a list of all tasks in your task list.
+<br/>**Format:**`list`
+
+<br/>**Sample output:**
+```text
+your tasks are here:
+1.[T][ ] buy groceries
+2.[D][ ] submit assignment (by: 31 Dec 2025)
+3.[E][ ] team meeting (from: 20 Oct 2025 14:00 to: 20 Oct 2025 16:00)
+```
+### Task Type Indicators:
+- `[T]`= Todo task
+- `[D]`= Deadline task
+- `[E]`= Event task
+### Status Indicators:
+- `[ ]`= Not completed
+- `[X]`= Completed
+---
+### Marking a task as not done:`unmark`
+Marks the specified task as not completed.
+<br/>**Format:**`unmark <index>`
+
+<br/>**Examples:**
+- `unmark 1`marks the 1st task as not completed
+---
+### Deleting a task:`delete`
+Permanently removes the specified task from your task list.
+<br/>**Format:**`delete <index>`
+
+<br/>**Examples:**
+- `delete 3`deletes the 3rd task
+- `list`followed by `delete 1`deletes the 1st task shown
+---
+### Finding tasks:`find`
+Finds tasks whose descriptions contain the given keyword.
+<br/>**Format:**`find <keyword>`
+- The search is **case-sensitive**
+
+<br/>**Examples:**
+- `find book`returns tasks containing "book" in their description
+- `find meeting`returns all tasks with "meeting" in the description
+
+<br/>**Sample output:**
+```text
+your matching tasks are here:
+1.[E][ ] team meeting (from: 20 Oct 2025 14:00 to: 20 Oct 2025 16:00)
+2.[D][ ] prepare meeting agenda (by: 19 Oct 2025)
+```
+---
+### Snoozing a task:`snooze`
+Postpones a deadline or event task by the specified duration.
+**Format:**`snooze <index duration>`
+
+**Duration formats:**
+- `Xd`for X days (eg `3d`= 3 days)
+- `Xh`for X hours (eg `5h`= 5 hours)
+- `Xm` for X minutes (eg `30m`= 30 minutes)
+
+**Examples:**
+- `snooze 1 2d`postpones the 1st task by 2 days
+- `snooze 3 5h`postpones the 3rd task by 5 hours
+
+**Note:**
+- Cannot snooze completed tasks
+- Cannot snooze todo tasks (they have no dates)
+---
+### Exiting the program:`bye`
+Exits the Bug application.
+**Format:**`bye`
+---
+# Command Summary
+
 | Action | Format | Example |
-| ------ | ------ | ------- |
-| Add Todo | `todo <description>` | `todo buy milk` |
-| Add Deadline | `deadline <description> /by <date>` | `deadline essay /by 2024-12-01` |
-| Add Event | `event <description> /from <start> /to <end>` | `event meeting /from 2024-12-01 1000 /to 2024-12-01 1200` |
-| List | `list` | `list` |
-| Mark Done | `mark <number>` | `mark 1` |
-| Unmark | `unmark <number>` | `unmark 1` |
-| Delete | `delete <number>` | `delete 1` |
-| Find | `find <keyword>` | `find homework` |
-| Snooze | `snooze <number> <duration>` | `snooze 1 2d` |
+|--------|--------|---------|
+| Help | `help` | `help` |
+| Add Todo | `todo DESCRIPTION` | `todo buy milk` |
+| Add Deadline | `deadline DESCRIPTION /by DATE` | `deadline submit report /by 2025-12-31` |
+| Add Event | `event DESCRIPTION /from START /to END` | `event meeting /from 2025-12-25 1400 /to 2025-12-25 1600` |
+| List Tasks | `list` | `list` |
+| Mark Done | `mark INDEX` | `mark 1` |
+| Mark Undone | `unmark INDEX` | `unmark 2` |
+| Delete Task | `delete INDEX` | `delete 3` |
+| Find Tasks | `find KEYWORD` | `find meeting` |
+| Snooze Task | `snooze INDEX DURATION` | `snooze 1 2d` |
 | Exit | `bye` | `bye` |
-### Troubleshooting
-#### Bug won't start?
-* Make sure you have Java 11 or later installed
-* Try running from command line: java -jar bug.jar
-#### Tasks not saving?
-* Check that Bug has permission to create files in the folder where you're running it
-* Bug saves tasks to a data folder in the same location as the jar file
-#### Getting error messages?
-* Check the command format matches the examples above
-* Make sure dates are in the correct format (yyyy-MM-dd)
-* Task numbers should be positive integers
-___
-Happy task managing with Bug!!!
