@@ -1,7 +1,12 @@
 package bug;
 
-import javafx.application.Application;
+import command.Command;
+import exception.BugException;
 import javafx.application.Platform;
+import storage.Storage;
+import task.TaskList;
+import ui.Parser;
+import ui.Ui;
 
 import java.util.Scanner;
 

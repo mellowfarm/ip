@@ -1,4 +1,4 @@
-package bug;
+package exception;
 
 /**
  * Custom exception class to handle errors specific to the Bug application.

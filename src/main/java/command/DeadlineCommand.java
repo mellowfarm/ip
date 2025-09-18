@@ -1,4 +1,10 @@
-package bug;
+package command;
+
+import exception.BugException;
+import storage.Storage;
+import task.Deadlines;
+import task.TaskList;
+import ui.Ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  * This command is responsible for parsing the deadline's description and due date,
  * creating the corresponding `Deadlines` object, and updating the task list and storage.
  */
-public class DeadlineCommand extends Command{
+public class DeadlineCommand extends Command {
 
     private final String description;
     private final String dueDate;

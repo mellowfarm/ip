@@ -1,4 +1,6 @@
-package bug;
+package task;
+
+import exception.BugException;
 
 import java.time.Duration;
 

@@ -1,6 +1,8 @@
 package bug;
 
+import command.*;
 import org.junit.jupiter.api.Test;
+import ui.Parser;
 
 import static org.junit.jupiter.api.Assertions.*;
 

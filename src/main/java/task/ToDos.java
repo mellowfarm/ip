@@ -1,6 +1,4 @@
-package bug;
-
-import java.time.Duration;
+package task;
 
 /**
  * Represents a Todo task in the task management application.

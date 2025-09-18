@@ -1,4 +1,10 @@
-package bug;
+package command;
+
+import exception.BugException;
+import storage.Storage;
+import task.Task;
+import task.TaskList;
+import ui.Ui;
 
 import java.util.ArrayList;
 
@@ -6,7 +12,7 @@ import java.util.ArrayList;
  * Represents the command to find tasks that match a given keyword.
  * This command searches for tasks whose description contains the specified keyword.
  */
-public class FindCommand extends Command{
+public class FindCommand extends Command {
 
     private final String keyword;
 

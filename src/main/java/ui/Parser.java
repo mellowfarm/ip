@@ -1,4 +1,6 @@
-package bug;
+package ui;
+
+import command.*;
 
 /**
  * Parser class responsible for parsing user input and converting it into Command objects.

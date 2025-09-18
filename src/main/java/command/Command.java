@@ -1,4 +1,9 @@
-package bug;
+package command;
+
+import exception.BugException;
+import storage.Storage;
+import task.TaskList;
+import ui.Ui;
 
 /**
  * Abstract class representing a command in the task management application.

@@ -1,4 +1,10 @@
-package bug;
+package command;
+
+import exception.BugException;
+import storage.Storage;
+import task.Task;
+import task.TaskList;
+import ui.Ui;
 
 /**
  * Represents the command to mark a task as not done.

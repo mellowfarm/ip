@@ -1,4 +1,7 @@
-package bug;
+package ui;
+
+import task.TaskList;
+import task.Task;
 
 import java.util.Scanner;
 import java.util.ArrayList;

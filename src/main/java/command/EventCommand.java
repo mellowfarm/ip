@@ -1,4 +1,10 @@
-package bug;
+package command;
+
+import exception.BugException;
+import storage.Storage;
+import task.Events;
+import task.TaskList;
+import ui.Ui;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  * This command parses the event's description, start time, and end time,
  * creates the corresponding `Events` object, and updates the task list and storage.
  */
-public class EventCommand extends Command{
+public class EventCommand extends Command {
 
     private final String description;
     private final String startTime;

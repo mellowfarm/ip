@@ -1,4 +1,10 @@
-package bug;
+package command;
+
+import exception.BugException;
+import storage.Storage;
+import task.Task;
+import task.TaskList;
+import ui.Ui;
 
 /**
  * Represents the command to delete a task from the task list.

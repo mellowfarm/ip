@@ -1,4 +1,8 @@
-package bug;
+package command;
+
+import storage.Storage;
+import task.TaskList;
+import ui.Ui;
 
 /**
  * Represents an unknown command that is triggered when the user enters an unrecognized command.

@@ -1,4 +1,8 @@
-package bug;
+package command;
+
+import storage.Storage;
+import task.TaskList;
+import ui.Ui;
 
 /**
  * Represents the 'Bye' command, which is used to exit the task management application.

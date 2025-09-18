@@ -1,4 +1,6 @@
-package bug;
+package storage;
+
+import task.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
