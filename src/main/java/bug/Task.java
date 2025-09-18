@@ -74,6 +74,6 @@ public abstract class Task {
     public abstract String toFileString();
 
     public void snooze(Duration duration) throws BugException {
-        throw new BugException(":(! cannot snooze todos, they have no dates!");
+        throw new BugException("Cannot snooze todos, they have no dates!");
     }
 }

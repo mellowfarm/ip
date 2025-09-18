@@ -19,13 +19,6 @@ public class Ui {
     }
 
     /**
-     * Prints a line of underscores for formatting.
-     */
-    public String showLine() {
-        return "____________________________________________________________";
-    }
-
-    /**
      * Displays a greeting message to the user.
      */
     public String showGreeting() {

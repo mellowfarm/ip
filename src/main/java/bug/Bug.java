@@ -70,7 +70,7 @@ public class Bug {
      */
     public String getResponse(String input) {
         if (input == null || input.trim().isEmpty()) {
-            return ui.showError(":(! please enter a command!");
+            return ui.showError("Please enter a command!");
         }
 
         try {
@@ -85,7 +85,7 @@ public class Bug {
         } catch (BugException e) {
             return ui.showError(e.getMessage());
         } catch (Exception e) {
-            return ui.showError(":(! something went wrong! Please try again.");
+            return ui.showError("Something went wrong! Please try again.");
         }
     }
 
